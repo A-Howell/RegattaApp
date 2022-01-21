@@ -1,3 +1,5 @@
+package classes;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -29,6 +31,6 @@ public class Official extends Person {
 
     @Override
     public String toString() {
-        return "Official | " + super.toString();
+        return "classes.Official | " + super.toString();
     }
 }

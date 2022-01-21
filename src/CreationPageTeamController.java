@@ -1,5 +1,6 @@
+import classes.Regatta;
+import classes.Team;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,8 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class CreationPageTeamController implements Initializable {
@@ -58,9 +57,9 @@ public class CreationPageTeamController implements Initializable {
         this.parentController.getCreateTeamButton().setDisable(true);
     }
 
-    /*public ObservableList<String> getTeamList(List<Team> teams) {
+    /*public ObservableList<String> getTeamList(List<classes.Team> teams) {
         List<String> teamStringList = new ArrayList<String>();
-        for (Team team : teams) {
+        for (classes.Team team : teams) {
             teamStringList.add(team.getTeamName());
         }
         return FXCollections.observableList(teamStringList);

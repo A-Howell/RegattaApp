@@ -1,3 +1,9 @@
+package classes;
+
+import enums.BoatType;
+import enums.Division;
+import enums.Gender;
+
 import java.util.ArrayList;
 import java.util.List;
 

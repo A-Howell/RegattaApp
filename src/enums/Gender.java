@@ -1,16 +1,15 @@
-public enum Division {
-    U14("Under 14", "U14"),
-    U16("Under 16", "U16"),
-    NOVICE("Novice", "Nov"),
-    JUNIOR("Junior", "Jnr"),
-    SENIOR("Senior", "Snr"),
-    MASTER("Master", "Mst"),
-    OPEN("Open", "Opn");
+package enums;
+
+public enum Gender {
+    MALE("Male", "M"),
+    FEMALE("Female", "F"),
+    MIXED("Mixed", "Mxd"),
+    OTHER("Other", "O");
 
     private final String text;
     private final String shortened;
 
-    private Division(String text, String shortened) {
+    private Gender(String text, String shortened) {
         this.text = text;
         this.shortened = shortened;
     }

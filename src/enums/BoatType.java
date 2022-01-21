@@ -1,3 +1,5 @@
+package enums;
+
 public enum BoatType {
     SINGLE_SCULL("1x", 1, false),
     DOUBLE_SCULL("2x", 2, false),
