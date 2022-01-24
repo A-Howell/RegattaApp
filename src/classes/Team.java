@@ -47,6 +47,10 @@ public class Team {
         this.teamMembers.add(teamMember);
     }
 
+    public void addCrew(Crew crew) {
+        this.teamCrews.add(crew);
+    }
+
     @Override
     public String toString() {
         return this.teamName;

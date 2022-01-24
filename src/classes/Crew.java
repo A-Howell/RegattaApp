@@ -1,91 +1,84 @@
 package classes;
 
+import enums.BoatType;
+
 import java.util.ArrayList;
 
 public class Crew {
-    private String crewName;
-    private ArrayList<Race> racesEntered;
     private ArrayList<CrewMember> crewMembers;
-    private int maxCrewMembers;
+    private BoatType boatType;
+    private Team team;
     private CrewMember cox;
 
-    public Crew(String crewName, int maxCrewMembers) {
-        this.crewName = crewName;
-        this.maxCrewMembers = maxCrewMembers;
-        this.racesEntered = new ArrayList<Race>();
+    public Crew(BoatType boatType) {
+        this.boatType = boatType;
         this.crewMembers = new ArrayList<CrewMember>();
         this.cox = null;
+        this.team = null;
     }
 
     // Setters
-
-    public void setCrewName(String crewName) {
-        this.crewName = crewName;
-    }
-
-    public void setRacesEntered(ArrayList<Race> racesEntered) {
-        this.racesEntered = racesEntered;
-    }
 
     public void setCrewMembers(ArrayList<CrewMember> crewMembers) {
         this.crewMembers = crewMembers;
     }
 
-    public void setMaxCrewMembers(int maxCrewMembers) {
-        this.maxCrewMembers = maxCrewMembers;
+    public void setBoatType(BoatType boatType) {
+        this.boatType = boatType;
     }
 
     public void setCox(CrewMember cox) {
         this.cox = cox;
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     // Getters
-
-    public String getCrewName() {
-        return crewName;
-    }
-
-    public ArrayList<Race> getRacesEntered() {
-        return racesEntered;
-    }
 
     public ArrayList<CrewMember> getCrewMembers() {
         return crewMembers;
     }
 
-    public int getMaxCrewMembers() {
-        return maxCrewMembers;
+    public BoatType getBoatType() {
+        return boatType;
     }
 
     public CrewMember getCox() {
         return cox;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
     // Other
 
-    public void enterRace(Race race) {
-        this.racesEntered.add(race);
-    }
-
-    public void removeRace(Race race) {
-        this.racesEntered.remove(race);
-    }
-
     public void addCrewMember(CrewMember crewMember) {
-        if (crewMembers.size() + 1 > maxCrewMembers) {
-            // Throw error
-        } else {
+        if (this.crewMembers.size() < this.boatType.getMaxCrewSize()) {
             this.crewMembers.add(crewMember);
+        } else {
+            System.out.println("Added too many rowers to crew");
         }
-
     }
 
     public void removeCrewMember(CrewMember crewMember) {
-        if (crewMembers.size() - 1 < 0) {
-            // Throw error
-        } else {
+        if (crewMembers.contains(crewMember)) {
             this.crewMembers.remove(crewMember);
+        } else {
+            System.out.println("Rower don't exist bro");
         }
+
+    }
+
+    @Override
+    public String toString() {
+        String str = this.team.toString() + " | " + this.boatType.toString();
+        if (this.cox != null) {
+             str += " | Cox: " + this.cox.getfName() + " " + this.cox.getlName();
+        }
+        return str;
     }
 
 }

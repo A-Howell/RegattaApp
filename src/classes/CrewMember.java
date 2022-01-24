@@ -6,11 +6,12 @@ import java.util.ArrayList;
 public class CrewMember extends Person {
     private ArrayList<Crew> crewsJoined;
     private Team team;
+    private Boolean isCox;
 
     public CrewMember(String fName, String lName, String phoneNum, LocalDate birthday, Team team) {
         super(fName, lName, phoneNum, birthday);
         this.team = team;
-        this.crewsJoined = new ArrayList<Crew>();
+        this.isCox = false;
     }
 
     // Setters
@@ -23,6 +24,10 @@ public class CrewMember extends Person {
         this.team = team;
     }
 
+    public void setCox(Boolean cox) {
+        isCox = cox;
+    }
+
     // Getters
 
     public ArrayList<Crew> getCrews() {
@@ -31,6 +36,10 @@ public class CrewMember extends Person {
 
     public Team getTeam() {
         return team;
+    }
+
+    public Boolean getCox() {
+        return isCox;
     }
 
     // Other
@@ -45,7 +54,11 @@ public class CrewMember extends Person {
 
     @Override
     public String toString() {
-        return team.getTeamName() + " | " + super.toString();
+//        if (this.isCox) {
+//            return team.getTeamName() + " | " + super.toString() + " | Cox";
+//        } else {
+            return team.getTeamName() + " | " + super.toString();
+//        }
     }
 
 }

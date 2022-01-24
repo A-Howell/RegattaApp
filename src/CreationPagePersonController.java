@@ -64,6 +64,7 @@ public class CreationPagePersonController implements Initializable {
             );
             r.addCrewMember(c);
         }
+        stage.setUserData(r);
         this.personListView.setItems(getPeopleList(r));
         this.parentController.checkEnabledButtons(event);
         this.parentController.getCreatePersonButton().setDisable(true);
