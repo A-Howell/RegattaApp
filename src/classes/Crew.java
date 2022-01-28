@@ -12,7 +12,7 @@ public class Crew {
 
     public Crew(BoatType boatType) {
         this.boatType = boatType;
-        this.crewMembers = new ArrayList<CrewMember>();
+        this.crewMembers = new ArrayList<>();
         this.cox = null;
         this.team = null;
     }
