@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+    <left>
+        <GridPane alignment="center" hgap="10" vgap="10">
+
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+            <Label text="Select from boat type: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <ComboBox fx:id="boatTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#boatTypeComboAction"/>
+
+            <ListView fx:id="crewListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4" />
+
+            <Button fx:id="selectBoatButton" text="Select boat" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#selectBoatButtonAction" />
+<!--            <Button fx:id="selectAsCoxButton" text="Select as cox" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#selectAsCoxButtonAction" />-->
+        </GridPane>
+    </left>
+    <center>
+        <GridPane alignment="center" hgap="10" vgap="10">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+
+            <Label text="Select division type" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <ComboBox fx:id="divTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#divTypeComboAction"/>
+
+            <ListView fx:id="selectedCrewListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3" prefHeight="200" />
+
+<!--            <ListView fx:id="selectedCoxListView" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3" prefHeight="25" />-->
+
+            <Button fx:id="removeBoat" text="Remove boat" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#removeBoatButtonAction" />
+<!--            <Button fx:id="removeCox" text="Remove cox" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#removeCoxButtonAction" />-->
+            <Button fx:id="enterButton" text="Enter" GridPane.columnIndex="2" GridPane.rowIndex="3" onAction="#enterButtonAction" />
+        </GridPane>
+    </center>
+    <right>
+        <GridPane alignment="center" hgap="10" vgap="10">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+            <Label text="List of races" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <ListView fx:id="raceListView" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        </GridPane>
+    </right>
+</BorderPane>
+        <!--            fx:controller="CreationPageRegattaController"-->
