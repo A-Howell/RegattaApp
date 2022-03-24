@@ -22,7 +22,8 @@ public class CreationPageRaceController implements Initializable {
     @FXML private ListView<Crew> selectedCrewListView;
     @FXML private ListView<Race> raceListView;
 
-    @FXML private Button selectBoatButton;
+    @FXML private Button selectCrewButton;
+    @FXML private Button removeCrewButton;
     @FXML private Button enterButton;
 
     @FXML private ComboBox<BoatType> boatTypeComboBox;
@@ -30,7 +31,6 @@ public class CreationPageRaceController implements Initializable {
 
     private Race race;
     List<Crew> crews;
-
 
     private CreationPageController parentController;
 
@@ -59,7 +59,7 @@ public class CreationPageRaceController implements Initializable {
 
         this.parentController.getCreateCrewButton().setDisable(true);
 
-        this.selectBoatButton.setDisable(true);
+        this.selectCrewButton.setDisable(true);
         this.enterButton.setDisable(true);
 
         this.race = new Race(1, null, null, null);
@@ -73,7 +73,9 @@ public class CreationPageRaceController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        BoatType boatType = this.boatTypeComboBox.getSelectionModel().getSelectedItem();
+//        BoatType boatType = this.boatTypeComboBox.getSelectionModel().getSelectedItem();
+
+        
 
         /*if (this.crew.getCrewMembers().size() == crew.getBoatType().getMaxCrewSize()) {
             this.crew.setTeam(this.teamComboBox.getValue());
@@ -88,8 +90,17 @@ public class CreationPageRaceController implements Initializable {
     }
 
     @FXML
-    private void selectBoatButtonAction(ActionEvent event) {
+    private void selectCrewButtonAction(ActionEvent event) {
+        Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
+        Regatta r = (Regatta) stage.getUserData();
 
+        setRaceBoatType();
+
+        Crew crew = this.crewListView.getSelectionModel().getSelectedItem();
+        this.race.addCrew(crew);
+        this.selectedCrewListView.setItems(FXCollections.observableList(this.race.getCrewList()));
+
+        this.crewListView.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -113,33 +124,18 @@ public class CreationPageRaceController implements Initializable {
     }
 
     @FXML
-    private void removeBoatButtonAction(ActionEvent event) {
-        /*CrewMember selectedRower = crewMemberListView.getSelectionModel().getSelectedItem();
-        this.crew.removeCrewMember(selectedRower);
-        this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.crew.getCrewMembers()));
-        this.selectedCrewMemberListView.getSelectionModel().clearSelection();*/
+    private void removeCrewButtonAction(ActionEvent event) {
+        try {
+            Crew selectedCrew = selectedCrewListView.getSelectionModel().getSelectedItem();
+            this.race.removeCrew(selectedCrew);
+            this.selectedCrewListView.setItems(FXCollections.observableList(this.race.getCrewList()));
+            this.selectedCrewListView.getSelectionModel().clearSelection();
+        } catch (Exception e) {
+            System.out.println("Error: no selected crew to remove.");
+        }
     }
 
     // FXML Combo list actions
-
-    /*@FXML
-    private void teamComboAction(ActionEvent event) {
-        setCrewTeamBoatType();
-        Team selectedTeam = teamComboBox.getValue();
-
-        Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
-        Regatta r = (Regatta) stage.getUserData();
-
-        List<CrewMember> crewMembers = new ArrayList<>();
-
-        for (CrewMember crewMember : r.getCrewMembers()) {
-            if (crewMember.getTeam() == selectedTeam) {
-                crewMembers.add(crewMember);
-            }
-        }
-
-        this.crewMemberListView.setItems(FXCollections.observableList(crewMembers));
-    }*/
 
     @FXML
     private void boatTypeComboAction(ActionEvent event) {
@@ -150,11 +146,6 @@ public class CreationPageRaceController implements Initializable {
             }
         }
         this.crewListView.setItems(FXCollections.observableList(tempCrews));
-//        if (isTeamAndBoatTypeSelected()) {
-//            setCrewTeamBoatType();
-//            this.selectAsRowerButton.setDisable(false);
-//            this.selectAsCoxButton.setDisable(!this.crew.getBoatType().getCoxed());
-//        }
     }
 
     // Other
@@ -180,10 +171,4 @@ public class CreationPageRaceController implements Initializable {
     private void setRaceGenderType() {
         //this.race.setGender(this.genderComboBox.getValue());
     }
-
-   /* private Boolean isTeamAndBoatTypeSelected() {
-        BoatType selectedBoatType = this.boatTypeComboBox.getValue();
-        Team selectedTeam = this.teamComboBox.getValue();
-        return (selectedBoatType != null) && (selectedTeam != null);
-    }*/
 }

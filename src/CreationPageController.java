@@ -1,4 +1,7 @@
+import classes.Crew;
 import classes.Regatta;
+import classes.Team;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CreationPageController implements Initializable {
@@ -46,6 +51,9 @@ public class CreationPageController implements Initializable {
     }
 
     @FXML private void createRaceButtonAction(ActionEvent event) {
+        checkEnabledButtons(event);
+        createRaceButton.setDisable(true);
+        loadFXMLCPRace(getClass().getResource(SceneConstants.CREATION_PAGE_RACE_XML));
     }
 
     @Override
@@ -112,7 +120,20 @@ public class CreationPageController implements Initializable {
             CreationPageCrewController ctrl = new CreationPageCrewController(this);
             l.setController(ctrl);
             this.borderPane.setCenter(l.load());
-            System.out.println("Loaded team fxml");
+            System.out.println("Loaded crew fxml");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFXMLCPRace(URL url) {
+        try {
+            FXMLLoader l = new FXMLLoader(url);
+            CreationPageRaceController ctrl = new CreationPageRaceController(this);
+            l.setController(ctrl);
+            this.borderPane.setCenter(l.load());
+            System.out.println("Loaded race fxml");
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -131,9 +152,12 @@ public class CreationPageController implements Initializable {
         // If a team with a member exists, enable crew creation
         this.createCrewButton.setDisable(r.getCrewMembers().isEmpty());
 
-//        this.createRaceButton.setDisable()
+        List<Crew> crews = new ArrayList<>();
+        for (Team team : r.getTeams()) {
+            crews.addAll(FXCollections.observableList(team.getTeamCrews()));
+        }
+        this.createRaceButton.setDisable(crews.isEmpty());
     }
-
 
     // Setters
 

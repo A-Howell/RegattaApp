@@ -90,19 +90,23 @@ public class Race {
 
     // Others
 
-    public void enterCrew(Crew crew) {
+    /*public void enterCrew(Crew crew) {
         if (numOfCrewsEntered + 1 > maxNumOfCrews) {
             // Throw error
         } else {
             this.crewList.add(crew);
         }
+    }*/
+
+    public void addCrew(Crew crew) {
+        this.crewList.add(crew);
     }
 
     public void removeCrew(Crew crew) {
-        if (numOfCrewsEntered - 1 < 0) {
-            // Throw error
-        } else {
+        try {
             this.crewList.remove(crew);
+        } catch (Exception e) {
+            System.out.println("Error: crew not in race.");
         }
     }
 }

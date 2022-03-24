@@ -8,5 +8,6 @@ public final class SceneConstants {
     public static final String CREATION_PAGE_TEAM_XML = "layouts/CreationPageTeam.fxml";
     public static final String CREATION_PAGE_PERSON_XML = "layouts/CreationPagePerson.fxml";
     public static final String CREATION_PAGE_CREW_XML = "layouts/CreationPageCrew.fxml";
+    public static final String CREATION_PAGE_RACE_XML = "layouts/CreationRaceCrew.fxml";
 
 }
