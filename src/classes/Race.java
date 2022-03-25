@@ -4,33 +4,34 @@ import enums.BoatType;
 import enums.Division;
 import enums.Gender;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Race {
-    private int startTime;
+    private LocalTime startTime;
     private Gender gender;
     private Division division;
     private BoatType boatType;
 
-    private int maxNumOfCrews;
+//    private int maxNumOfCrews;
     private int numOfCrewsEntered;
     private List<Crew> crewList;
 
-    public Race(int startTime, Gender gender, Division division, BoatType boatType) {
+    public Race(LocalTime startTime, Gender gender, Division division, BoatType boatType) {
         this.startTime = startTime;
         this.gender = gender;
         this.division = division;
         this.boatType = boatType;
 
-        this.maxNumOfCrews = boatType.getMaxCrewSize();
+//        this.maxNumOfCrews = boatType.getMaxCrewSize();
         this.numOfCrewsEntered = 0;
         this.crewList = new ArrayList<Crew>();
     }
 
     // Setters
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
@@ -46,9 +47,9 @@ public class Race {
         this.gender = gender;
     }
 
-    public void setMaxNumOfCrews(int maxNumOfCrews) {
-        this.maxNumOfCrews = maxNumOfCrews;
-    }
+//    public void setMaxNumOfCrews(int maxNumOfCrews) {
+//        this.maxNumOfCrews = maxNumOfCrews;
+//    }
 
     public void setNumOfCrewsEntered(int numOfCrewsEntered) {
         this.numOfCrewsEntered = numOfCrewsEntered;
@@ -60,7 +61,7 @@ public class Race {
 
     // Getters
 
-    public int getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
@@ -76,9 +77,9 @@ public class Race {
         return gender;
     }
 
-    public int getMaxNumOfCrews() {
-        return maxNumOfCrews;
-    }
+//    public int getMaxNumOfCrews() {
+//        return maxNumOfCrews;
+//    }
 
     public int getNumOfCrewsEntered() {
         return numOfCrewsEntered;

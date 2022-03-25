@@ -8,7 +8,7 @@
         <GridPane alignment="center" hgap="10" vgap="10">
 
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-            <Label text="Select from boat type: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label text="Select boat type: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ComboBox fx:id="boatTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#boatTypeComboAction"/>
 
             <ListView fx:id="crewListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4" />

@@ -108,4 +108,8 @@ public class Regatta {
         this.officials.add(official);
     }
 
+    public void addRace(Race race) {
+        this.races.add(race);
+    }
+
 }

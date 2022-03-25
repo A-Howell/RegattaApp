@@ -57,12 +57,11 @@ public class CreationPageRaceController implements Initializable {
         List<Division> divTypeList = Arrays.asList(Division.class.getEnumConstants());
         this.divTypeComboBox.setItems(FXCollections.observableList(divTypeList));
 
-        this.parentController.getCreateCrewButton().setDisable(true);
-
+        this.parentController.getCreateRaceButton().setDisable(true);
         this.selectCrewButton.setDisable(true);
         this.enterButton.setDisable(true);
 
-        this.race = new Race(1, null, null, null);
+        this.race = new Race(null, null, null, null);
         updateRaceList();
     }
 
@@ -73,9 +72,15 @@ public class CreationPageRaceController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
+        r.addRace(this.race);
+        stage.setUserData(r);
+        this.race = new Race(null, null, null, null);
+        this.raceListView.setItems(FXCollections.observableList(r.getRaces()));
+        this.parentController.checkEnabledButtons(event);
+        this.parentController.getCreateRaceButton().setDisable(true);
 //        BoatType boatType = this.boatTypeComboBox.getSelectionModel().getSelectedItem();
 
-        
+
 
         /*if (this.crew.getCrewMembers().size() == crew.getBoatType().getMaxCrewSize()) {
             this.crew.setTeam(this.teamComboBox.getValue());
@@ -146,6 +151,17 @@ public class CreationPageRaceController implements Initializable {
             }
         }
         this.crewListView.setItems(FXCollections.observableList(tempCrews));
+    }
+
+    @FXML
+    private void divTypeComboAction(ActionEvent event) {
+//        List<Crew> tempCrews = new ArrayList<>();
+//        for (Crew crew : this.crews) {
+//            if (crew.getBoatType() == this.boatTypeComboBox.getValue()) {
+//                tempCrews.add(crew);
+//            }
+//        }
+//        this.crewListView.setItems(FXCollections.observableList(tempCrews));
     }
 
     // Other

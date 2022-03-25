@@ -73,7 +73,13 @@ public class CreationPageCrewController implements Initializable {
 
         if (this.crew.getCrewMembers().size() == crew.getBoatType().getMaxCrewSize()) {
             this.crew.setTeam(this.teamComboBox.getValue());
-            this.teamComboBox.getValue().addCrew(this.crew);
+//            r.getTeams()..teamComboBox.getValue().addCrew(this.crew);
+            if (r.getTeams().contains(this.crew.getTeam())) {
+                r.getTeams()
+                        .get(r.getTeams().indexOf(this.crew.getTeam()))
+                            .addCrew(this.crew);
+            }
+            stage.setUserData(r);
             this.selectedCrewMemberListView.getItems().clear();
             this.selectedCoxListView.getItems().clear();
             this.crew = new Crew(null);
@@ -81,6 +87,8 @@ public class CreationPageCrewController implements Initializable {
         }
 
         updateCrewList();
+        this.parentController.checkEnabledButtons(event);
+        this.parentController.getCreateCrewButton().setDisable(true);
     }
 
     @FXML
