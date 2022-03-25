@@ -1,5 +1,7 @@
 package classes;
 
+import enums.Gender;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -8,8 +10,9 @@ public class CrewMember extends Person {
     private Team team;
     private Boolean isCox;
 
-    public CrewMember(String fName, String lName, String phoneNum, LocalDate birthday, Team team) {
-        super(fName, lName, phoneNum, birthday);
+    public CrewMember(String fName, String lName, String phoneNum, LocalDate birthday,
+                      Gender gender, Team team) {
+        super(fName, lName, phoneNum, birthday, gender);
         this.team = team;
         this.isCox = false;
     }

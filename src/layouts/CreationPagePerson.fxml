@@ -20,27 +20,46 @@
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 
             <Label text="First name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="fNameBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField fx:id="fNameBox" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
 
             <Label text="Last name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="lNameBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="lNameBox" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3"/>
 
             <Label text="Phone number" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="phoneNumBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="phoneNumBox" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
 
             <Label text="Birthday" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <DatePicker fx:id="birthdayPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="birthdayPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"  GridPane.columnSpan="3"/>
 
+            <Label text="Person type" GridPane.columnIndex="0" GridPane.rowIndex="4" />
             <RadioButton fx:id="officialRadio" text="Official" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <toggleGroup>
                     <ToggleGroup fx:id="personChoice"/>
                 </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="crewMemberRadio" text="Team member" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <RadioButton fx:id="crewMemberRadio" text="Team member" GridPane.columnIndex="2" GridPane.rowIndex="4">
                 <toggleGroup>
                     <fx:reference source="personChoice"/>
                 </toggleGroup>
             </RadioButton>
+
+            <Label text="Gender" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <RadioButton fx:id="maleRadio" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#maleRadioAction">
+                <toggleGroup>
+                    <ToggleGroup fx:id="genderChoice"/>
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="femaleRadio" text="Female" GridPane.columnIndex="2" GridPane.rowIndex="5" onAction="#femaleRadioAction">
+                <toggleGroup>
+                    <fx:reference source="genderChoice"/>
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="otherRadio" text="Other" GridPane.columnIndex="3" GridPane.rowIndex="5" onAction="#otherRadioAction">
+                <toggleGroup>
+                    <fx:reference source="genderChoice"/>
+                </toggleGroup>
+            </RadioButton>
+
             <Button fx:id="enterButton" text="Enter" GridPane.columnIndex="1" GridPane.rowIndex="6" onAction="#enterButtonAction" />
         </GridPane>
     </center>

@@ -1,4 +1,5 @@
 import classes.*;
+import enums.Gender;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,8 +26,14 @@ public class CreationPagePersonController implements Initializable {
     @FXML private RadioButton officialRadio;
     @FXML private RadioButton crewMemberRadio;
 
+    @FXML private RadioButton maleRadio;
+    @FXML private RadioButton femaleRadio;
+    @FXML private RadioButton otherRadio;
+
     @FXML private ListView<Team> teamListView;
     @FXML private ListView<Person> personListView;
+
+    private Gender selectedGender;
 
     @FXML private CreationPageController parentController;
 
@@ -50,7 +57,8 @@ public class CreationPagePersonController implements Initializable {
                 this.fNameBox.getText(),
                 this.lNameBox.getText(),
                 this.phoneNumBox.getText(),
-                this.birthdayPicker.getValue()
+                this.birthdayPicker.getValue(),
+                this.selectedGender
             );
             r.addOfficial(o);
         } else if (this.crewMemberRadio.isSelected()) {
@@ -60,6 +68,7 @@ public class CreationPagePersonController implements Initializable {
                     this.lNameBox.getText(),
                     this.phoneNumBox.getText(),
                     this.birthdayPicker.getValue(),
+                    this.selectedGender,
                     team
             );
             r.addCrewMember(c);
@@ -71,8 +80,22 @@ public class CreationPagePersonController implements Initializable {
     }
 
     private ObservableList<Person> getPeopleList(Regatta r) {
-        List<Person> peopleList = new ArrayList<Person>(r.getOfficials());
+        List<Person> peopleList = new ArrayList<>(r.getOfficials());
         peopleList.addAll(r.getCrewMembers());
         return FXCollections.observableList(peopleList);
+    }
+
+    // Radio actions
+
+    @FXML private void maleRadioAction (ActionEvent event) {
+        this.selectedGender = Gender.MALE;
+    }
+
+    @FXML private void femaleRadioAction (ActionEvent event) {
+        this.selectedGender = Gender.FEMALE;
+    }
+
+    @FXML private void otherRadioAction (ActionEvent event) {
+        this.selectedGender = Gender.OTHER;
     }
 }

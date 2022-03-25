@@ -1,13 +1,15 @@
 package classes;
 
+import enums.Gender;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Official extends Person {
     private ArrayList<Race> racesOfficiating;
 
-    public Official(String fName, String lName, String phoneNum, LocalDate birthday) {
-        super(fName, lName, phoneNum, birthday);
+    public Official(String fName, String lName, String phoneNum, LocalDate birthday, Gender gender) {
+        super(fName, lName, phoneNum, birthday, gender);
         this.racesOfficiating = new ArrayList<Race>();
     }
 
