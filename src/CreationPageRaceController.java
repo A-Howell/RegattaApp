@@ -1,6 +1,7 @@
 import classes.*;
 import enums.BoatType;
 import enums.Division;
+import enums.Gender;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,16 +19,26 @@ import java.util.ResourceBundle;
 
 public class CreationPageRaceController implements Initializable {
 
-    @FXML private ListView<Crew> crewListView;
-    @FXML private ListView<Crew> selectedCrewListView;
-    @FXML private ListView<Race> raceListView;
+    @FXML
+    private ListView<Crew> crewListView;
+    @FXML
+    private ListView<Crew> selectedCrewListView;
+    @FXML
+    private ListView<Race> raceListView;
 
-    @FXML private Button selectCrewButton;
-    @FXML private Button removeCrewButton;
-    @FXML private Button enterButton;
+    @FXML
+    private Button selectCrewButton;
+    @FXML
+    private Button removeCrewButton;
+    @FXML
+    private Button enterButton;
 
-    @FXML private ComboBox<BoatType> boatTypeComboBox;
-    @FXML private ComboBox<Division> divTypeComboBox;
+    @FXML
+    private ComboBox<BoatType> boatTypeComboBox;
+    @FXML
+    private ComboBox<Division> divTypeComboBox;
+    @FXML
+    private ComboBox<Gender> genderComboBox;
 
     private Race race;
     List<Crew> crews;
@@ -56,6 +67,9 @@ public class CreationPageRaceController implements Initializable {
 
         List<Division> divTypeList = Arrays.asList(Division.class.getEnumConstants());
         this.divTypeComboBox.setItems(FXCollections.observableList(divTypeList));
+
+        List<Gender> genderList = Arrays.asList(Gender.class.getEnumConstants());
+        this.genderComboBox.setItems(FXCollections.observableList(genderList));
 
         this.parentController.getCreateRaceButton().setDisable(true);
         this.selectCrewButton.setDisable(true);
@@ -108,6 +122,8 @@ public class CreationPageRaceController implements Initializable {
         this.crewListView.getSelectionModel().clearSelection();
     }
 
+    // Button actions
+
     @FXML
     private void selectAsCoxButtonAction(ActionEvent event) {
         /*if (this.crew.getBoatType().getCoxed()) {
@@ -130,6 +146,7 @@ public class CreationPageRaceController implements Initializable {
 
     @FXML
     private void removeCrewButtonAction(ActionEvent event) {
+        // TODO possible removal after infoForButtonCheck
         try {
             Crew selectedCrew = selectedCrewListView.getSelectionModel().getSelectedItem();
             this.race.removeCrew(selectedCrew);
@@ -155,13 +172,13 @@ public class CreationPageRaceController implements Initializable {
 
     @FXML
     private void divTypeComboAction(ActionEvent event) {
-//        List<Crew> tempCrews = new ArrayList<>();
-//        for (Crew crew : this.crews) {
-//            if (crew.getBoatType() == this.boatTypeComboBox.getValue()) {
-//                tempCrews.add(crew);
-//            }
-//        }
-//        this.crewListView.setItems(FXCollections.observableList(tempCrews));
+
+    }
+
+    // Checks
+
+    private void infoForButtonCheck() {
+        // Disable/Enable enter button if all info entered or not
     }
 
     // Other

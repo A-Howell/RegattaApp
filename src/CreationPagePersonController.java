@@ -116,7 +116,7 @@ public class CreationPagePersonController implements Initializable {
                 || this.fNameBox.getText().isEmpty()
                 || this.lNameBox.getText().isEmpty()
                 || this.phoneNumBox.getText().isEmpty()
-                || this.birthdayPicker.getValue().toString().isEmpty()
+                || this.birthdayPicker.getValue() == null
                 || (this.personChoice.getSelectedToggle() == null)
                 || (this.genderChoice.getSelectedToggle() == null));
     }
@@ -126,7 +126,7 @@ public class CreationPagePersonController implements Initializable {
                 || this.fNameBox.getText().isEmpty()
                 || this.lNameBox.getText().isEmpty()
                 || this.phoneNumBox.getText().isEmpty()
-                || this.birthdayPicker.getValue().toString().isEmpty()
+                || this.birthdayPicker.getValue() == null
                 || (this.personChoice.getSelectedToggle() == null)
                 || (this.genderChoice.getSelectedToggle() == null));
     }
@@ -136,7 +136,7 @@ public class CreationPagePersonController implements Initializable {
                 || this.fNameBox.getText().isEmpty()
                 || this.lNameBox.getText().isEmpty()
                 || this.phoneNumBox.getText().isEmpty()
-                || this.birthdayPicker.getValue().toString().isEmpty()
+                || this.birthdayPicker.getValue() == null
                 || (this.personChoice.getSelectedToggle() == null)
                 || (this.genderChoice.getSelectedToggle() == null));
     }

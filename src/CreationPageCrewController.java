@@ -185,11 +185,6 @@ public class CreationPageCrewController implements Initializable {
 
     @FXML
     private void boatTypeComboAction(ActionEvent event) {
-        /*if (isTeamAndBoatTypeSelected()) {
-            setCrewTeamBoatType();
-            this.selectAsRowerButton.setDisable(false);
-            this.selectAsCoxButton.setDisable(!this.crew.getBoatType().getCoxed());
-        }*/
         infoForButtonCheck();
     }
 

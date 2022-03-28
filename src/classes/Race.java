@@ -14,7 +14,6 @@ public class Race {
     private Division division;
     private BoatType boatType;
 
-//    private int maxNumOfCrews;
     private int numOfCrewsEntered;
     private List<Crew> crewList;
 
@@ -24,9 +23,8 @@ public class Race {
         this.division = division;
         this.boatType = boatType;
 
-//        this.maxNumOfCrews = boatType.getMaxCrewSize();
         this.numOfCrewsEntered = 0;
-        this.crewList = new ArrayList<Crew>();
+        this.crewList = new ArrayList<>();
     }
 
     // Setters
@@ -46,10 +44,6 @@ public class Race {
     public void setGender(Gender gender) {
         this.gender = gender;
     }
-
-//    public void setMaxNumOfCrews(int maxNumOfCrews) {
-//        this.maxNumOfCrews = maxNumOfCrews;
-//    }
 
     public void setNumOfCrewsEntered(int numOfCrewsEntered) {
         this.numOfCrewsEntered = numOfCrewsEntered;
@@ -77,10 +71,6 @@ public class Race {
         return gender;
     }
 
-//    public int getMaxNumOfCrews() {
-//        return maxNumOfCrews;
-//    }
-
     public int getNumOfCrewsEntered() {
         return numOfCrewsEntered;
     }
@@ -90,14 +80,6 @@ public class Race {
     }
 
     // Others
-
-    /*public void enterCrew(Crew crew) {
-        if (numOfCrewsEntered + 1 > maxNumOfCrews) {
-            // Throw error
-        } else {
-            this.crewList.add(crew);
-        }
-    }*/
 
     public void addCrew(Crew crew) {
         this.crewList.add(crew);
