@@ -1,6 +1,7 @@
 package classes;
 
 import enums.BoatType;
+import enums.Gender;
 
 import java.util.ArrayList;
 
@@ -9,12 +10,14 @@ public class Crew {
     private BoatType boatType;
     private Team team;
     private CrewMember cox;
+    private Gender gender;
 
     public Crew(BoatType boatType) {
         this.boatType = boatType;
         this.crewMembers = new ArrayList<>();
         this.cox = null;
         this.team = null;
+        this.gender = Gender.OTHER;
     }
 
     // Setters
@@ -35,6 +38,10 @@ public class Crew {
         this.team = team;
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     // Getters
 
     public ArrayList<CrewMember> getCrewMembers() {
@@ -51,6 +58,10 @@ public class Crew {
 
     public Team getTeam() {
         return team;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     // Other

@@ -43,7 +43,7 @@ public class CreationPageRaceController implements Initializable {
     private Race race;
     List<Crew> crews;
 
-    private CreationPageController parentController;
+    private final CreationPageController parentController;
 
     public CreationPageRaceController(CreationPageController parentController) {
         this.parentController = parentController;
@@ -54,10 +54,12 @@ public class CreationPageRaceController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        crews = new ArrayList<>();
+        this.crews = new ArrayList<>();
+        this.race = new Race(null, null, null, null);
+
 
         for (Team team : r.getTeams()) {
-            crews.addAll(FXCollections.observableList(team.getTeamCrews()));
+            this.crews.addAll(FXCollections.observableList(team.getTeamCrews()));
         }
 
         this.crewListView.setItems(FXCollections.observableList(crews));
@@ -75,11 +77,10 @@ public class CreationPageRaceController implements Initializable {
         this.selectCrewButton.setDisable(true);
         this.enterButton.setDisable(true);
 
-        this.race = new Race(null, null, null, null);
         updateRaceList();
     }
 
-    // FXML Button actions
+    // Button actions
 
     @FXML
     private void enterButtonAction(ActionEvent event) {
@@ -110,8 +111,8 @@ public class CreationPageRaceController implements Initializable {
 
     @FXML
     private void selectCrewButtonAction(ActionEvent event) {
-        Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
-        Regatta r = (Regatta) stage.getUserData();
+//        Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
+//        Regatta r = (Regatta) stage.getUserData();
 
         setRaceBoatType();
 
@@ -121,8 +122,6 @@ public class CreationPageRaceController implements Initializable {
 
         this.crewListView.getSelectionModel().clearSelection();
     }
-
-    // Button actions
 
     @FXML
     private void selectAsCoxButtonAction(ActionEvent event) {
@@ -146,7 +145,7 @@ public class CreationPageRaceController implements Initializable {
 
     @FXML
     private void removeCrewButtonAction(ActionEvent event) {
-        // TODO possible removal after infoForButtonCheck
+        // TODO possible removal after infoForButtonCheck, RE:try+catch
         try {
             Crew selectedCrew = selectedCrewListView.getSelectionModel().getSelectedItem();
             this.race.removeCrew(selectedCrew);
@@ -157,7 +156,7 @@ public class CreationPageRaceController implements Initializable {
         }
     }
 
-    // FXML Combo list actions
+    // Combo list actions
 
     @FXML
     private void boatTypeComboAction(ActionEvent event) {
@@ -173,6 +172,24 @@ public class CreationPageRaceController implements Initializable {
     @FXML
     private void divTypeComboAction(ActionEvent event) {
 
+    }
+
+    @FXML
+    private void genderComboAction(ActionEvent event) {
+
+        if (this.boatTypeComboBox.getValue() != null
+            && this.genderComboBox != null) {
+            Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
+            Regatta r = (Regatta) stage.getUserData();
+
+            this.race.setGender(this.genderComboBox.getValue());
+            this.race.setBoatType(this.boatTypeComboBox.getValue());
+
+            List<Crew> tempCrewList = new ArrayList<>();
+//            for (Crew crew : this.crews) {
+//                if (crew)
+//            }
+        }
     }
 
     // Checks

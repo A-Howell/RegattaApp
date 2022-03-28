@@ -10,7 +10,7 @@
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 
             <Label text="Select gender: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <ComboBox fx:id="genderComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <ComboBox fx:id="genderComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#genderComboAction"/>
 
             <Label text="Select boat type: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <ComboBox fx:id="boatTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#boatTypeComboAction"/>
@@ -34,11 +34,6 @@
                 <TextField fx:id="minuteBox" prefWidth="30" maxWidth="30"/>
                 <Label text="E.g. 14:25"/>
             </HBox>
-
-            <!--<GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <TextField fx:id="hourBox" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="1" prefWidth="50" maxWidth="50" />
-                <TextField fx:id="minuteBox" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.columnSpan="1" prefWidth="50" maxWidth="50"/>
-            </GridPane>-->
 
             <ListView fx:id="selectedCrewListView" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3" prefHeight="200" />
 

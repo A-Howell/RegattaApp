@@ -9,12 +9,15 @@
 
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
             <Label text="Select from team: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <ComboBox fx:id="teamComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#teamComboAction"/>
+            <ComboBox fx:id="teamComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#teamAndGenderComboAction"/>
 
-            <ListView fx:id="crewMemberListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4" onMouseClicked="#infoForButtonCheck"/>
+            <Label text="Select gender: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ComboBox fx:id="genderComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#teamAndGenderComboAction"/>
 
-            <Button fx:id="selectAsRowerButton" text="Select as rower" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#selectAsRowerButtonAction" />
-            <Button fx:id="selectAsCoxButton" text="Select as cox" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#selectAsCoxButtonAction" />
+            <ListView fx:id="crewMemberListView" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="4" onMouseClicked="#infoForButtonCheck"/>
+
+            <Button fx:id="selectAsRowerButton" text="Select as rower" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#selectAsRowerButtonAction" />
+            <Button fx:id="selectAsCoxButton" text="Select as cox" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#selectAsCoxButtonAction" />
         </GridPane>
     </left>
     <center>
