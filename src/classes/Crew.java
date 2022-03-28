@@ -56,11 +56,7 @@ public class Crew {
     // Other
 
     public void addCrewMember(CrewMember crewMember) {
-        if (this.crewMembers.size() < this.boatType.getMaxCrewSize()) {
-            this.crewMembers.add(crewMember);
-        } else {
-            System.out.println("Added too many rowers to crew");
-        }
+        this.crewMembers.add(crewMember);
     }
 
     public void removeCrewMember(CrewMember crewMember) {

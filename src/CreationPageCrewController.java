@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -20,23 +21,38 @@ import java.util.ResourceBundle;
 
 public class CreationPageCrewController implements Initializable {
 
-    @FXML private ListView<CrewMember> crewMemberListView;
-    @FXML private ListView<CrewMember> selectedCrewMemberListView;
-    @FXML private ListView<CrewMember> selectedCoxListView;
-    @FXML private ListView<Crew> crewListView;
+    @FXML
+    private ListView<CrewMember> crewMemberListView;
+    @FXML
+    private ListView<CrewMember> selectedCrewMemberListView;
+    @FXML
+    private ListView<CrewMember> selectedCoxListView;
+    @FXML
+    private ListView<Crew> crewListView;
 
-    @FXML private Button selectAsRowerButton;
-    @FXML private Button selectAsCoxButton;
+    @FXML
+    private Button selectAsRowerButton;
+    @FXML
+    private Button selectAsCoxButton;
+    @FXML
+    private Button enterButton;
+    @FXML
+    private Button removeRower;
+    @FXML
+    private Button removeCox;
+
+
+    @FXML
+    private ComboBox<Team> teamComboBox;
+    @FXML
+    private ComboBox<BoatType> boatTypeComboBox;
 
     private Crew crew;
-//    private List<CrewMember> selectedCrewMembers;
 
-    @FXML private ComboBox<Team> teamComboBox;
-    @FXML private ComboBox<BoatType> boatTypeComboBox;
 
     private CreationPageController parentController;
 
-    public CreationPageCrewController (CreationPageController parentController) {
+    public CreationPageCrewController(CreationPageController parentController) {
         this.parentController = parentController;
     }
 
@@ -60,6 +76,7 @@ public class CreationPageCrewController implements Initializable {
 
         this.crew = new Crew(null);
         updateCrewList();
+        infoForButtonCheck();
     }
 
     // FXML Button actions
@@ -77,7 +94,7 @@ public class CreationPageCrewController implements Initializable {
             if (r.getTeams().contains(this.crew.getTeam())) {
                 r.getTeams()
                         .get(r.getTeams().indexOf(this.crew.getTeam()))
-                            .addCrew(this.crew);
+                        .addCrew(this.crew);
             }
             stage.setUserData(r);
             this.selectedCrewMemberListView.getItems().clear();
@@ -89,6 +106,7 @@ public class CreationPageCrewController implements Initializable {
         updateCrewList();
         this.parentController.checkEnabledButtons(event);
         this.parentController.getCreateCrewButton().setDisable(true);
+        infoForButtonCheck();
     }
 
     @FXML
@@ -101,6 +119,7 @@ public class CreationPageCrewController implements Initializable {
         this.crew.addCrewMember(rower);
 
         this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.crew.getCrewMembers()));
+        infoForButtonCheck();
     }
 
     @FXML
@@ -120,7 +139,7 @@ public class CreationPageCrewController implements Initializable {
         } else {
             System.out.println("Crew not coxed");
         }
-
+        infoForButtonCheck();
     }
 
     @FXML
@@ -129,6 +148,7 @@ public class CreationPageCrewController implements Initializable {
         this.crew.removeCrewMember(selectedRower);
         this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.crew.getCrewMembers()));
         this.selectedCrewMemberListView.getSelectionModel().clearSelection();
+        infoForButtonCheck();
     }
 
     @FXML
@@ -138,6 +158,7 @@ public class CreationPageCrewController implements Initializable {
             this.selectedCoxListView.getItems().clear();
             this.selectedCrewMemberListView.getSelectionModel().clearSelection();
         }
+        infoForButtonCheck();
     }
 
     // FXML Combo list actions
@@ -159,15 +180,100 @@ public class CreationPageCrewController implements Initializable {
         }
 
         this.crewMemberListView.setItems(FXCollections.observableList(crewMembers));
+        infoForButtonCheck();
     }
 
     @FXML
     private void boatTypeComboAction(ActionEvent event) {
-        if (isTeamAndBoatTypeSelected()) {
+        /*if (isTeamAndBoatTypeSelected()) {
             setCrewTeamBoatType();
             this.selectAsRowerButton.setDisable(false);
             this.selectAsCoxButton.setDisable(!this.crew.getBoatType().getCoxed());
+        }*/
+        infoForButtonCheck();
+    }
+
+    // Checks
+
+    private void infoForButtonCheck() {
+        // Disable/Enable enter button if all info entered or not
+        // Select as rower button
+        this.selectAsRowerButton.setDisable(this.crewMemberListView.getSelectionModel().isEmpty()
+                || this.boatTypeComboBox.getValue() == null
+                || this.selectedCrewMemberListView.getItems().size()
+                == this.boatTypeComboBox.getValue().getMaxCrewSize());
+
+        System.out.println("BoatType value: " + this.boatTypeComboBox.getValue());
+        // Select as cox button
+        this.selectAsCoxButton.setDisable(this.boatTypeComboBox.getValue() == null
+                || !this.boatTypeComboBox.getValue().getCoxed()
+                || this.crewMemberListView.getSelectionModel().isEmpty()
+                || this.selectedCoxListView.getItems().size() == 1);
+
+        // Enter button
+        if (this.boatTypeComboBox.getValue() != null) {
+            if (this.boatTypeComboBox.getValue().getCoxed()) {
+                this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.boatTypeComboBox.getValue() == null
+                        || this.selectedCoxListView.getItems().isEmpty()
+                        || this.selectedCrewMemberListView.getItems().size()
+                        != this.boatTypeComboBox.getValue().getMaxCrewSize());
+            } else if (!this.boatTypeComboBox.getValue().getCoxed()) {
+                this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.boatTypeComboBox.getValue() == null
+                        || this.selectedCrewMemberListView.getItems().size()
+                        != this.boatTypeComboBox.getValue().getMaxCrewSize());
+            }
+        } else {
+            this.enterButton.setDisable(true);
         }
+
+        // Remove Rower button
+        this.removeRower.setDisable(this.selectedCrewMemberListView.getSelectionModel().isEmpty()
+                || this.selectedCrewMemberListView.getItems().isEmpty());
+
+        // Remove Cox button
+        this.removeCox.setDisable(this.selectedCoxListView.getItems().isEmpty());
+    }
+
+    @FXML private void infoForButtonCheck(MouseEvent event) {
+        // Disable/Enable enter button if all info entered or not
+        // Select as rower button
+        this.selectAsRowerButton.setDisable(this.crewMemberListView.getSelectionModel().isEmpty()
+                || this.boatTypeComboBox.getValue() == null
+                || this.selectedCrewMemberListView.getItems().size()
+                == this.boatTypeComboBox.getValue().getMaxCrewSize());
+
+        // Select as cox button
+        this.selectAsCoxButton.setDisable(this.boatTypeComboBox.getValue() == null
+                || !this.boatTypeComboBox.getValue().getCoxed()
+                || this.crewMemberListView.getSelectionModel().isEmpty()
+                || this.selectedCoxListView.getItems().size() == 1);
+
+        // Enter button
+        if (this.boatTypeComboBox.getValue() != null) {
+            if (this.boatTypeComboBox.getValue().getCoxed()) {
+                this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.boatTypeComboBox.getValue() == null
+                        || this.selectedCoxListView.getItems().isEmpty()
+                        || this.selectedCrewMemberListView.getItems().size()
+                        != this.boatTypeComboBox.getValue().getMaxCrewSize());
+            } else if (!this.boatTypeComboBox.getValue().getCoxed()) {
+                this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.boatTypeComboBox.getValue() == null
+                        || this.selectedCrewMemberListView.getItems().size()
+                        != this.boatTypeComboBox.getValue().getMaxCrewSize());
+            }
+        } else {
+            this.enterButton.setDisable(true);
+        }
+
+        // Remove Rower button
+        this.removeRower.setDisable(this.selectedCrewMemberListView.getSelectionModel().isEmpty()
+                || this.selectedCrewMemberListView.getItems().isEmpty());
+
+        // Remove Cox button
+        this.removeCox.setDisable(this.selectedCoxListView.getItems().isEmpty());
     }
 
     // Other
@@ -176,7 +282,7 @@ public class CreationPageCrewController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        List<Crew> crewList = new ArrayList<Crew>();
+        List<Crew> crewList = new ArrayList<>();
 
         for (Team team : r.getTeams()) {
             crewList.addAll(team.getTeamCrews());
@@ -195,4 +301,6 @@ public class CreationPageCrewController implements Initializable {
         Team selectedTeam = this.teamComboBox.getValue();
         return (selectedBoatType != null) && (selectedTeam != null);
     }
+
+
 }

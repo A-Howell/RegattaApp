@@ -11,7 +11,7 @@
             <Label text="Select from team: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ComboBox fx:id="teamComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#teamComboAction"/>
 
-            <ListView fx:id="crewMemberListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4" />
+            <ListView fx:id="crewMemberListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="4" onMouseClicked="#infoForButtonCheck"/>
 
             <Button fx:id="selectAsRowerButton" text="Select as rower" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#selectAsRowerButtonAction" />
             <Button fx:id="selectAsCoxButton" text="Select as cox" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#selectAsCoxButtonAction" />
@@ -24,7 +24,7 @@
             <Label text="Select boat type" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ComboBox fx:id="boatTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#boatTypeComboAction"/>
 
-            <ListView fx:id="selectedCrewMemberListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3" prefHeight="200" />
+            <ListView fx:id="selectedCrewMemberListView" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3" prefHeight="200" onMouseClicked="#infoForButtonCheck"/>
 
             <ListView fx:id="selectedCoxListView" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3" prefHeight="25" />
 

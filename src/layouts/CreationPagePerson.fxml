@@ -12,7 +12,7 @@
         <GridPane alignment="center" hgap="10" vgap="10">
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
             <Label text="List of teams" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <ListView fx:id="teamListView" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ListView fx:id="teamListView" GridPane.columnIndex="0" GridPane.rowIndex="1" onMouseClicked="#allInfoEnteredCheckListView"/>
         </GridPane>
     </left>
     <center>
@@ -20,24 +20,24 @@
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 
             <Label text="First name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="fNameBox" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
+            <TextField fx:id="fNameBox" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="3" onAction="#allInfoEnteredCheck"/>
 
             <Label text="Last name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="lNameBox" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3"/>
+            <TextField fx:id="lNameBox" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3" onAction="#allInfoEnteredCheck"/>
 
             <Label text="Phone number" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="phoneNumBox" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
+            <TextField fx:id="phoneNumBox" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3" onAction="#allInfoEnteredCheck"/>
 
             <Label text="Birthday" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <DatePicker fx:id="birthdayPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"  GridPane.columnSpan="3"/>
+            <DatePicker fx:id="birthdayPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"  GridPane.columnSpan="3" onAction="#allInfoEnteredCheck"/>
 
             <Label text="Person type" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <RadioButton fx:id="officialRadio" text="Official" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <RadioButton fx:id="officialRadio" text="Official" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#allInfoEnteredCheck">
                 <toggleGroup>
                     <ToggleGroup fx:id="personChoice"/>
                 </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="crewMemberRadio" text="Team member" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <RadioButton fx:id="crewMemberRadio" text="Team member" GridPane.columnIndex="2" GridPane.rowIndex="4" onAction="#allInfoEnteredCheck">
                 <toggleGroup>
                     <fx:reference source="personChoice"/>
                 </toggleGroup>

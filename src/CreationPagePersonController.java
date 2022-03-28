@@ -6,8 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,9 @@ public class CreationPagePersonController implements Initializable {
     @FXML private DatePicker birthdayPicker;
 
     @FXML private Button enterButton;
+
+    @FXML private ToggleGroup personChoice;
+    @FXML private ToggleGroup genderChoice;
 
     @FXML private RadioButton officialRadio;
     @FXML private RadioButton crewMemberRadio;
@@ -47,6 +52,7 @@ public class CreationPagePersonController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
         this.teamListView.setItems(FXCollections.observableList(r.getTeams()));
         this.parentController.getCreatePersonButton().setDisable(true);
+        allInfoEnteredCheck();
     }
 
     @FXML private void enterButtonAction(ActionEvent event) {
@@ -77,6 +83,7 @@ public class CreationPagePersonController implements Initializable {
         this.personListView.setItems(getPeopleList(r));
         this.parentController.checkEnabledButtons(event);
         this.parentController.getCreatePersonButton().setDisable(true);
+        clearFields();
     }
 
     private ObservableList<Person> getPeopleList(Regatta r) {
@@ -89,13 +96,59 @@ public class CreationPagePersonController implements Initializable {
 
     @FXML private void maleRadioAction (ActionEvent event) {
         this.selectedGender = Gender.MALE;
+        allInfoEnteredCheck();
     }
 
     @FXML private void femaleRadioAction (ActionEvent event) {
         this.selectedGender = Gender.FEMALE;
+        allInfoEnteredCheck();
     }
 
     @FXML private void otherRadioAction (ActionEvent event) {
         this.selectedGender = Gender.OTHER;
+        allInfoEnteredCheck();
+    }
+
+    // Checks
+
+    private void allInfoEnteredCheck() {
+        this.enterButton.setDisable(this.teamListView.getSelectionModel().isEmpty()
+                || this.fNameBox.getText().isEmpty()
+                || this.lNameBox.getText().isEmpty()
+                || this.phoneNumBox.getText().isEmpty()
+                || this.birthdayPicker.getValue().toString().isEmpty()
+                || (this.personChoice.getSelectedToggle() == null)
+                || (this.genderChoice.getSelectedToggle() == null));
+    }
+
+    @FXML private void allInfoEnteredCheck(ActionEvent event) {
+        this.enterButton.setDisable(this.teamListView.getSelectionModel().isEmpty()
+                || this.fNameBox.getText().isEmpty()
+                || this.lNameBox.getText().isEmpty()
+                || this.phoneNumBox.getText().isEmpty()
+                || this.birthdayPicker.getValue().toString().isEmpty()
+                || (this.personChoice.getSelectedToggle() == null)
+                || (this.genderChoice.getSelectedToggle() == null));
+    }
+
+    @FXML private void allInfoEnteredCheckListView(MouseEvent event) {
+        this.enterButton.setDisable(this.teamListView.getSelectionModel().isEmpty()
+                || this.fNameBox.getText().isEmpty()
+                || this.lNameBox.getText().isEmpty()
+                || this.phoneNumBox.getText().isEmpty()
+                || this.birthdayPicker.getValue().toString().isEmpty()
+                || (this.personChoice.getSelectedToggle() == null)
+                || (this.genderChoice.getSelectedToggle() == null));
+    }
+
+    private void clearFields() {
+        this.fNameBox.clear();
+        this.lNameBox.clear();
+        this.phoneNumBox.clear();
+        this.birthdayPicker.setValue(null);
+        this.personChoice.selectToggle(null);
+        this.genderChoice.selectToggle(null);
+        this.teamListView.getSelectionModel().clearSelection();
+        allInfoEnteredCheck();
     }
 }
