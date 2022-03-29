@@ -92,4 +92,17 @@ public class Race {
             System.out.println("Error: crew not in race.");
         }
     }
+
+    public String getStartTimeString() {
+        // TODO useless, remove
+        return this.startTime.toString().substring(0, this.startTime.toString().length());
+    }
+
+    @Override
+    public String toString() { // 10:40 | Nov M 4x
+        return getStartTimeString() + " | "
+                + this.division.toStringShortened() + " "
+                + this.gender.toStringShortened() + " " + this.boatType.toString() + " | "
+                + this.crewList.size() + " boats";
+    }
 }

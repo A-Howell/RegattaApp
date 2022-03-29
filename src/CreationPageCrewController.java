@@ -90,19 +90,16 @@ public class CreationPageCrewController implements Initializable {
 
         if (this.crew.getCrewMembers().size() == crew.getBoatType().getMaxCrewSize()) {
             setCrewTeamGender();
-            System.out.println(this.boatTypeComboBox.getValue()); // TODO throwing NPE because of BoatType not being set here
             this.crew.setBoatType(this.boatTypeComboBox.getValue());
 
             r.getTeams()
                     .get(r.getTeams().indexOf(this.crew.getTeam()))
                     .addCrew(this.crew);
 
-
             stage.setUserData(r);
             this.selectedCrewMemberListView.getItems().clear();
             this.selectedCoxListView.getItems().clear();
-//            this.boatTypeComboBox.getSelectionModel().clearSelection();
-            this.crew = new Crew(null);
+            this.crew = new Crew(this.boatTypeComboBox.getValue());
             setCrewTeamGender();
         }
 
@@ -199,14 +196,15 @@ public class CreationPageCrewController implements Initializable {
         // Disable/Enable enter button if all info entered or not
         // Select as rower button
         this.selectAsRowerButton.setDisable(this.crewMemberListView.getSelectionModel().isEmpty()
+                || this.teamComboBox.getValue() == null
                 || this.genderComboBox.getValue() == null
                 || this.boatTypeComboBox.getValue() == null
                 || this.selectedCrewMemberListView.getItems().size()
                 == this.boatTypeComboBox.getValue().getMaxCrewSize());
 
-        System.out.println("BoatType value: " + this.boatTypeComboBox.getValue());
         // Select as cox button
         this.selectAsCoxButton.setDisable(this.boatTypeComboBox.getValue() == null
+                || this.teamComboBox.getValue() == null
                 || !this.boatTypeComboBox.getValue().getCoxed()
                 || this.crewMemberListView.getSelectionModel().isEmpty()
                 || this.selectedCoxListView.getItems().size() == 1);
@@ -215,12 +213,14 @@ public class CreationPageCrewController implements Initializable {
         if (this.boatTypeComboBox.getValue() != null) {
             if (this.boatTypeComboBox.getValue().getCoxed()) {
                 this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.genderComboBox.getValue() == null
                         || this.boatTypeComboBox.getValue() == null
                         || this.selectedCoxListView.getItems().isEmpty()
                         || this.selectedCrewMemberListView.getItems().size()
                         != this.boatTypeComboBox.getValue().getMaxCrewSize());
             } else if (!this.boatTypeComboBox.getValue().getCoxed()) {
                 this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.genderComboBox.getValue() == null
                         || this.boatTypeComboBox.getValue() == null
                         || this.selectedCrewMemberListView.getItems().size()
                         != this.boatTypeComboBox.getValue().getMaxCrewSize());
@@ -241,12 +241,15 @@ public class CreationPageCrewController implements Initializable {
         // Disable/Enable enter button if all info entered or not
         // Select as rower button
         this.selectAsRowerButton.setDisable(this.crewMemberListView.getSelectionModel().isEmpty()
+                || this.teamComboBox.getValue() == null
+                || this.genderComboBox.getValue() == null
                 || this.boatTypeComboBox.getValue() == null
                 || this.selectedCrewMemberListView.getItems().size()
                 == this.boatTypeComboBox.getValue().getMaxCrewSize());
 
         // Select as cox button
         this.selectAsCoxButton.setDisable(this.boatTypeComboBox.getValue() == null
+                || this.teamComboBox.getValue() == null
                 || !this.boatTypeComboBox.getValue().getCoxed()
                 || this.crewMemberListView.getSelectionModel().isEmpty()
                 || this.selectedCoxListView.getItems().size() == 1);
@@ -255,12 +258,14 @@ public class CreationPageCrewController implements Initializable {
         if (this.boatTypeComboBox.getValue() != null) {
             if (this.boatTypeComboBox.getValue().getCoxed()) {
                 this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.genderComboBox.getValue() == null
                         || this.boatTypeComboBox.getValue() == null
                         || this.selectedCoxListView.getItems().isEmpty()
                         || this.selectedCrewMemberListView.getItems().size()
                         != this.boatTypeComboBox.getValue().getMaxCrewSize());
             } else if (!this.boatTypeComboBox.getValue().getCoxed()) {
                 this.enterButton.setDisable(this.teamComboBox.getValue() == null
+                        || this.genderComboBox.getValue() == null
                         || this.boatTypeComboBox.getValue() == null
                         || this.selectedCrewMemberListView.getItems().size()
                         != this.boatTypeComboBox.getValue().getMaxCrewSize());
