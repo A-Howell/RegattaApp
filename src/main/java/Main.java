@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     private static Stage stage;
@@ -14,7 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         try {
             stage = primaryStage;
-            Pane root = (Pane) FXMLLoader.load(getClass().getResource(SceneConstants.FRONT_PAGE_XML));
+            Pane root = (Pane) FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(SceneConstants.FRONT_PAGE_XML)));
 
             Scene scene = new Scene(root,1000,500);
             SceneController sceneController = new SceneController(scene);
