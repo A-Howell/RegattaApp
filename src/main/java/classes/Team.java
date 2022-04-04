@@ -6,8 +6,14 @@ public class Team {
     private String teamName;
     private ArrayList<Crew> teamCrews;
     private ArrayList<CrewMember> teamMembers;
+    private int teamID;
+
+    private static int teamCount = 0;
 
     public Team(String teamName) {
+        teamCount++;
+        this.teamID = teamCount;
+
         this.teamName = teamName;
         this.teamCrews = new ArrayList<Crew>();
         this.teamMembers = new ArrayList<CrewMember>();
@@ -27,6 +33,14 @@ public class Team {
         this.teamMembers = teamMembers;
     }
 
+    public void setTeamID(int teamID) {
+        this.teamID = teamID;
+    }
+
+    public static void setTeamCount(int teamCount) {
+        Team.teamCount = teamCount;
+    }
+
     // Getters
 
     public String getTeamName() {
@@ -41,6 +55,14 @@ public class Team {
         return teamMembers;
     }
 
+    public int getTeamID() {
+        return teamID;
+    }
+
+    public static int getTeamCount() {
+        return teamCount;
+    }
+
     // Other
 
     public void addTeamMember(CrewMember teamMember) {
@@ -53,6 +75,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return this.teamName;
+        return "[" + this.teamID + "] " + this.teamName;
     }
 }

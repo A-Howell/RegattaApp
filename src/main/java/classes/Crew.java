@@ -11,6 +11,10 @@ public class Crew {
     private Team team;
     private CrewMember cox;
     private Gender gender;
+    private int crewID;
+
+    private static int crewCounter = 0;
+
 
     public Crew(BoatType boatType) {
         this.boatType = boatType;
@@ -18,6 +22,9 @@ public class Crew {
         this.cox = null;
         this.team = null;
         this.gender = Gender.OTHER;
+
+        crewCounter++;
+        this.crewID = crewCounter;
     }
 
     // Setters
@@ -42,6 +49,14 @@ public class Crew {
         this.gender = gender;
     }
 
+    public void setCrewID(int crewID) {
+        this.crewID = crewID;
+    }
+
+    public static void setCrewCounter(int crewCounter) {
+        Crew.crewCounter = crewCounter;
+    }
+
     // Getters
 
     public ArrayList<CrewMember> getCrewMembers() {
@@ -64,6 +79,14 @@ public class Crew {
         return gender;
     }
 
+    public int getCrewID() {
+        return crewID;
+    }
+
+    public static int getCrewCounter() {
+        return crewCounter;
+    }
+
     // Other
 
     public void addCrewMember(CrewMember crewMember) {
@@ -81,7 +104,7 @@ public class Crew {
 
     @Override
     public String toString() {
-        String str = this.team.toString() + " | " + this.boatType.toString();
+        String str = this.team.toString() + " | [" + this.crewID + "] " + this.boatType.toString();
         if (this.cox != null) {
              str += " | Cox: " + this.cox.getfName() + " " + this.cox.getlName();
         }

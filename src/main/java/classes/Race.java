@@ -13,6 +13,9 @@ public class Race {
     private Gender gender;
     private Division division;
     private BoatType boatType;
+    private int raceID;
+
+    private static int raceCounter = 0;
 
     private int numOfCrewsEntered;
     private List<Crew> crewList;
@@ -25,6 +28,9 @@ public class Race {
 
         this.numOfCrewsEntered = 0;
         this.crewList = new ArrayList<>();
+
+        raceCounter++;
+        this.raceID = raceCounter;
     }
 
     // Setters
@@ -53,6 +59,14 @@ public class Race {
         this.crewList = crewList;
     }
 
+    public void setRaceID(int raceID) {
+        this.raceID = raceID;
+    }
+
+    public static void setRaceCounter(int raceCounter) {
+        Race.raceCounter = raceCounter;
+    }
+
     // Getters
 
     public LocalTime getStartTime() {
@@ -79,6 +93,14 @@ public class Race {
         return crewList;
     }
 
+    public int getRaceID() {
+        return raceID;
+    }
+
+    public static int getRaceCounter() {
+        return raceCounter;
+    }
+
     // Others
 
     public void addCrew(Crew crew) {
@@ -96,7 +118,8 @@ public class Race {
 
     @Override
     public String toString() { // 10:40 | Nov M 4x
-        return getStartTimeString() + " | "
+        return "[" + this.raceID + "] "
+                + getStartTimeString() + " | "
                 + this.division.toStringShortened() + " "
                 + this.gender.toStringShortened() + " " + this.boatType.toString() + " | "
                 + this.crewList.size() + " boats";

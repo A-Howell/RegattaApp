@@ -106,11 +106,17 @@ public class CreationPageCrewController implements Initializable {
             }
             tempCrew.setGender(this.genderComboBox.getValue());
             tempCrew.setTeam(this.teamComboBox.getValue());
-            tempCrew.setCrewMembers(this.selectedCrewMembers);
+//            tempCrew.setCrewMembers(this.selectedCrewMembers);
 
             r.getTeams()
                     .get(r.getTeams().indexOf(this.teamComboBox.getValue()))
                     .addCrew(tempCrew);
+
+            for (CrewMember cm : selectedCrewMembers) {
+                int teamIndex = r.getTeams().indexOf(this.teamComboBox.getValue());
+                int crewIndex = r.getTeams().get(teamIndex).getTeamCrews().indexOf(tempCrew);
+                r.getTeams().get(teamIndex).getTeamCrews().get(crewIndex).addCrewMember(cm);
+            }
 
             stage.setUserData(r);
             this.selectedCrewMemberListView.getItems().clear();
@@ -129,6 +135,13 @@ public class CreationPageCrewController implements Initializable {
             System.out.println("Team: " + team);
             for (CrewMember tm : team.getTeamMembers()) {
                 System.out.println("    TM: " + tm);
+            }
+            System.out.println("Team: " + team);
+            for (Crew crew : team.getTeamCrews()) {
+                System.out.println("    Crew: " + crew);
+                for (CrewMember tm : crew.getCrewMembers()  ) {
+                    System.out.println("        CrewMember: " + tm);
+                }
             }
         }
     }

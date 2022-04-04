@@ -6,58 +6,53 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CrewMember extends Person {
-    private ArrayList<Crew> crewsJoined;
     private Team team;
-    private Boolean isCox;
+    private int crewMemberID;
+
+    private static int crewMemberCount = 0;
 
     public CrewMember(String fName, String lName, String phoneNum, LocalDate birthday,
                       Gender gender, Team team) {
         super(fName, lName, phoneNum, birthday, gender);
         this.team = team;
-        this.isCox = false;
+
+        crewMemberCount++;
+        this.crewMemberID = crewMemberCount;
     }
 
     // Setters
-
-    public void setCrews(ArrayList<Crew> crews) {
-        this.crewsJoined = crews;
-    }
 
     public void setTeam(Team team) {
         this.team = team;
     }
 
-    public void setCox(Boolean cox) {
-        isCox = cox;
+    public void setCrewMemberID(int crewMemberID) {
+        this.crewMemberID = crewMemberID;
+    }
+
+    public static void setCrewMemberCount(int crewMemberCount) {
+        CrewMember.crewMemberCount = crewMemberCount;
     }
 
     // Getters
-
-    public ArrayList<Crew> getCrews() {
-        return crewsJoined;
-    }
 
     public Team getTeam() {
         return team;
     }
 
-    public Boolean getCox() {
-        return isCox;
+    public int getCrewMemberID() {
+        return crewMemberID;
+    }
+
+    public static int getCrewMemberCount() {
+        return crewMemberCount;
     }
 
     // Other
 
-    public void joinCrew(Crew crew) {
-        this.crewsJoined.add(crew);
-    }
-
-    public void removeCrew(Crew crew) {
-        this.crewsJoined.remove(crew);
-    }
-
     @Override
     public String toString() {
-            return team.getTeamName() + " | " + super.toString();
+            return team.getTeamName() + " | [" + this.crewMemberID + "] " + super.toString();
     }
 
 }
