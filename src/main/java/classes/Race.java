@@ -86,11 +86,7 @@ public class Race {
     }
 
     public void removeCrew(Crew crew) {
-        try {
             this.crewList.remove(crew);
-        } catch (Exception e) {
-            System.out.println("Error: crew not in race.");
-        }
     }
 
     public String getStartTimeString() {

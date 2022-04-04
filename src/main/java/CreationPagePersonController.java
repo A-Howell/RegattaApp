@@ -68,14 +68,13 @@ public class CreationPagePersonController implements Initializable {
             );
             r.addOfficial(o);
         } else if (this.crewMemberRadio.isSelected()) {
-            Team team = this.teamListView.getSelectionModel().getSelectedItem();
             CrewMember c = new CrewMember(
                     this.fNameBox.getText(),
                     this.lNameBox.getText(),
                     this.phoneNumBox.getText(),
                     this.birthdayPicker.getValue(),
                     this.selectedGender,
-                    team
+                    this.teamListView.getSelectionModel().getSelectedItem()
             );
             r.addCrewMember(c);
         }

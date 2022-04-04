@@ -48,8 +48,9 @@ public class CreationPageRaceController implements Initializable {
     @FXML
     private TextField minuteBox;
 
-    private Race race;
-    List<Crew> crews;
+    private List<Crew> crews;
+    private List<Crew> selectedCrews;
+
 
     private final CreationPageController parentController;
 
@@ -63,8 +64,8 @@ public class CreationPageRaceController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
 
         this.crews = new ArrayList<>();
-        this.race = new Race(null, null, null, null);
-
+//        this.race = new Race(null, null, null, null);
+        this.selectedCrews = new ArrayList<>();
 
         for (Team team : r.getTeams()) {
             this.crews.addAll(FXCollections.observableList(team.getTeamCrews()));
@@ -95,16 +96,43 @@ public class CreationPageRaceController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        this.race.setStartTime(LocalTime.of(Integer.parseInt(this.hourBox.getText()),
-                Integer.parseInt(this.minuteBox.getText()), 0));
+//        this.race.setStartTime(LocalTime.of(Integer.parseInt(this.hourBox.getText()),
+//                Integer.parseInt(this.minuteBox.getText()), 0));
+//        this.race.setGender(this.genderComboBox.getValue());
+//        this.race.setBoatType(this.boatTypeComboBox.getValue());
+//        this.race.setDivision(this.divTypeComboBox.getValue());
+
+        Race tempRace = new Race(
+                LocalTime.of(Integer.parseInt(this.hourBox.getText()),
+                        Integer.parseInt(this.minuteBox.getText()), 0),
+                this.genderComboBox.getValue(),
+                this.divTypeComboBox.getValue(),
+                this.boatTypeComboBox.getValue());
+
+//        tempRace.setCrewList(this.race.getCrewList());
+        tempRace.setCrewList(this.selectedCrews);
 
 
-        r.addRace(this.race);
+        r.addRace(tempRace);
         stage.setUserData(r);
-        this.race = new Race(null, null, null, null);
-        this.raceListView.setItems(FXCollections.observableList(r.getRaces()));
+
+//        this.race = new Race(null, null, null, null);
+//        this.raceListView.setItems(FXCollections.observableList(r.getRaces()));
+        updateRaceList();
+
         this.parentController.checkEnabledButtons(event);
         this.parentController.getCreateRaceButton().setDisable(true);
+        infoForButtonCheck();
+        this.selectedCrewListView.setItems(FXCollections.observableList(this.selectedCrews));
+        for (Race race : r.getRaces()) {
+            System.out.println("Race: " + race);
+            for (Crew crew : race.getCrewList()) {
+                System.out.println("    Crew: " + crew);
+                for (CrewMember cm : crew.getCrewMembers()) {
+                    System.out.println("        CrewMember: " + cm);
+                }
+            }
+        }
     }
 
     @FXML
@@ -112,18 +140,26 @@ public class CreationPageRaceController implements Initializable {
         // TODO check
 
         Crew crew = this.crewListView.getSelectionModel().getSelectedItem();
-        this.race.addCrew(crew);
-        this.selectedCrewListView.setItems(FXCollections.observableList(this.race.getCrewList()));
 
-        this.crewListView.getSelectionModel().clearSelection();
+        this.selectedCrews.add(crew);
+//        this.selectedCrewListView.getItems().add(crew);
+        this.selectedCrewListView.setItems(FXCollections.observableList(this.selectedCrews));
+
+
+        this.crewListView.getSelectionModel().clearSelection(); // FXCollections.observableList(this.race.getCrewList())
         infoForButtonCheck();
     }
 
     @FXML
     private void removeCrewButtonAction(ActionEvent event) {
+        System.out.println(this.selectedCrews);
+
         Crew selectedCrew = selectedCrewListView.getSelectionModel().getSelectedItem();
-        this.race.removeCrew(selectedCrew);
-        this.selectedCrewListView.setItems(FXCollections.observableList(this.race.getCrewList()));
+        this.selectedCrews.remove(selectedCrew);
+//        this.race.getCrewList().remove(selectedCrew);
+        System.out.println(this.selectedCrews);
+
+        this.selectedCrewListView.setItems(FXCollections.observableList(this.selectedCrews));
         this.selectedCrewListView.getSelectionModel().clearSelection();
         infoForButtonCheck();
     }
@@ -157,7 +193,7 @@ public class CreationPageRaceController implements Initializable {
 
     @FXML
     private void divTypeComboAction(ActionEvent event) {
-        this.race.setDivision(this.divTypeComboBox.getValue());
+//        this.race.setDivision(this.divTypeComboBox.getValue());
         infoForButtonCheck();
     }
 
@@ -244,11 +280,11 @@ public class CreationPageRaceController implements Initializable {
     }
 
     private void setRaceDivType() {
-        this.race.setDivision(this.divTypeComboBox.getValue());
+//        this.race.setDivision(this.divTypeComboBox.getValue());
     }
 
     private void setRaceGenderAndBoatType() {
-        this.race.setGender(this.genderComboBox.getValue());
-        this.race.setBoatType(this.boatTypeComboBox.getValue());
+//        this.race.setGender(this.genderComboBox.getValue());
+//        this.race.setBoatType(this.boatTypeComboBox.getValue());
     }
 }

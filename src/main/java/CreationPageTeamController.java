@@ -41,16 +41,12 @@ public class CreationPageTeamController implements Initializable {
         Stage stage = (Stage) node.getScene().getWindow();
 
         // Pass regatta object to stage for all scenes to access
-        try {
-            Regatta r = (Regatta) stage.getUserData();
-            r.addTeam(t);
-            stage.setUserData(r);
+        Regatta r = (Regatta) stage.getUserData();
+        r.addTeam(t);
+        stage.setUserData(r);
 
-            System.out.println("Populating list");
-            this.teamListView.setItems(FXCollections.observableList(r.getTeams()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("Populating list");
+        this.teamListView.setItems(FXCollections.observableList(r.getTeams()));
 
         this.teamNameBox.clear();
         this.parentController.checkEnabledButtons(event);

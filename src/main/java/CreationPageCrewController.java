@@ -50,8 +50,9 @@ public class CreationPageCrewController implements Initializable {
     @FXML
     private ComboBox<Gender> genderComboBox;
 
-    private Crew crew;
-
+//    private Crew crew;
+    private ArrayList<CrewMember> selectedCrewMembers;
+    private CrewMember selectedCox;
 
     private CreationPageController parentController;
 
@@ -64,7 +65,11 @@ public class CreationPageCrewController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        this.crewMemberListView.setItems(FXCollections.observableList(r.getCrewMembers()));
+//        this.crewMemberListView.setItems(FXCollections.observableList(r.getCrewMembers()));
+
+        for (Team team : r.getTeams()) {
+            this.crewMemberListView.getItems().addAll(team.getTeamMembers());
+        }
 
         this.teamComboBox.setItems(FXCollections.observableList(r.getTeams()));
 
@@ -76,7 +81,9 @@ public class CreationPageCrewController implements Initializable {
 
         this.parentController.getCreateCrewButton().setDisable(true);
 
-        this.crew = new Crew(null);
+//        this.crew = new Crew(null);
+        this.selectedCrewMembers = new ArrayList<>();
+        this.selectedCox = null;
         updateCrewList();
         infoForButtonCheck();
     }
@@ -88,18 +95,28 @@ public class CreationPageCrewController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        if (this.crew.getCrewMembers().size() == crew.getBoatType().getMaxCrewSize()) {
-            setCrewTeamGender();
-            this.crew.setBoatType(this.boatTypeComboBox.getValue());
+        if (this.selectedCrewMembers.size() == this.boatTypeComboBox.getValue().getMaxCrewSize()) {
+//            setCrewTeamGender();
+//            this.crew.setBoatType(this.boatTypeComboBox.getValue());
+
+
+            Crew tempCrew = new Crew(this.boatTypeComboBox.getValue());
+            if (tempCrew.getBoatType().getCoxed()) {
+                tempCrew.setCox(this.selectedCox);
+            }
+            tempCrew.setGender(this.genderComboBox.getValue());
+            tempCrew.setTeam(this.teamComboBox.getValue());
+            tempCrew.setCrewMembers(this.selectedCrewMembers);
 
             r.getTeams()
-                    .get(r.getTeams().indexOf(this.crew.getTeam()))
-                    .addCrew(this.crew);
+                    .get(r.getTeams().indexOf(this.teamComboBox.getValue()))
+                    .addCrew(tempCrew);
 
             stage.setUserData(r);
             this.selectedCrewMemberListView.getItems().clear();
+            this.selectedCrewMembers.clear();
             this.selectedCoxListView.getItems().clear();
-            this.crew = new Crew(this.boatTypeComboBox.getValue());
+            this.selectedCox = null;
             setCrewTeamGender();
         }
 
@@ -107,33 +124,34 @@ public class CreationPageCrewController implements Initializable {
         this.parentController.checkEnabledButtons(event);
         this.parentController.getCreateCrewButton().setDisable(true);
         infoForButtonCheck();
+
+        for (Team team : r.getTeams()) {
+            System.out.println("Team: " + team);
+            for (CrewMember tm : team.getTeamMembers()) {
+                System.out.println("    TM: " + tm);
+            }
+        }
     }
 
     @FXML
     private void selectAsRowerButtonAction(ActionEvent event) {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
-        CrewMember rower = this.crewMemberListView.getSelectionModel().getSelectedItem();
 
-        this.crew.addCrewMember(rower);
+        this.selectedCrewMembers.add(this.crewMemberListView.getSelectionModel().getSelectedItem());
 
-        this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.crew.getCrewMembers()));
+        this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.selectedCrewMembers));
         infoForButtonCheck();
     }
 
     @FXML
     private void selectAsCoxButtonAction(ActionEvent event) {
-        if (this.crew.getBoatType().getCoxed()) {
-            Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
-            Regatta r = (Regatta) stage.getUserData();
-
-            CrewMember cox = this.crewMemberListView.getSelectionModel().getSelectedItem();
-
-            this.crew.setCox(cox);
-
-            List<CrewMember> coxList = new ArrayList<>();
-            coxList.add(this.crew.getCox());
-            this.selectedCoxListView.setItems(FXCollections.observableList(coxList));
+        if (this.boatTypeComboBox.getValue().getCoxed()) {
+//            List<CrewMember> coxList = new ArrayList<>();
+//            coxList.add(this.selectedCox);
+//            this.selectedCoxListView.setItems(FXCollections.observableList(coxList));
+            this.selectedCox = this.crewMemberListView.getSelectionModel().getSelectedItem();
+            this.selectedCoxListView.getItems().add(this.selectedCox);
         } else {
             System.out.println("Crew not coxed");
         }
@@ -142,17 +160,17 @@ public class CreationPageCrewController implements Initializable {
 
     @FXML
     private void removeRowerButtonAction(ActionEvent event) {
-        CrewMember selectedRower = crewMemberListView.getSelectionModel().getSelectedItem();
-        this.crew.removeCrewMember(selectedRower);
-        this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.crew.getCrewMembers()));
+        CrewMember selectedCrewMember = crewMemberListView.getSelectionModel().getSelectedItem();
+        this.selectedCrewMembers.remove(selectedCrewMember);
+        this.selectedCrewMemberListView.setItems(FXCollections.observableList(this.selectedCrewMembers));
         this.selectedCrewMemberListView.getSelectionModel().clearSelection();
         infoForButtonCheck();
     }
 
     @FXML
     private void removeCoxButtonAction(ActionEvent event) {
-        if (crew.getCox() != null) {
-            crew.setCox(null);
+        if (this.selectedCox != null) {
+            this.selectedCox = null;
             this.selectedCoxListView.getItems().clear();
             this.selectedCrewMemberListView.getSelectionModel().clearSelection();
         }
@@ -164,7 +182,7 @@ public class CreationPageCrewController implements Initializable {
     @FXML
     private void teamAndGenderComboAction(ActionEvent event) {
         if (isTeamAndGenderSelected()) {
-            setCrewTeamGender();
+//            setCrewTeamGender();
 
             Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
             Regatta r = (Regatta) stage.getUserData();
@@ -172,8 +190,8 @@ public class CreationPageCrewController implements Initializable {
             List<CrewMember> crewMembers = new ArrayList<>();
 
             for (CrewMember crewMember : r.getCrewMembers()) {
-                if (crewMember.getTeam() == teamComboBox.getValue()
-                    && crewMember.getGender() == genderComboBox.getValue()) {
+                if (crewMember.getTeam() == this.teamComboBox.getValue()
+                    && crewMember.getGender() == this.genderComboBox.getValue()) {
                     crewMembers.add(crewMember);
                 }
             }
@@ -186,7 +204,7 @@ public class CreationPageCrewController implements Initializable {
 
     @FXML
     private void boatTypeComboAction(ActionEvent event) {
-        this.crew.setBoatType(this.boatTypeComboBox.getValue());
+//        this.crew.setBoatType(this.boatTypeComboBox.getValue());
         infoForButtonCheck();
     }
 
@@ -298,8 +316,8 @@ public class CreationPageCrewController implements Initializable {
     }
 
     private void setCrewTeamGender() {
-        this.crew.setTeam(this.teamComboBox.getValue());
-        this.crew.setGender(this.genderComboBox.getValue());
+//        this.crew.setTeam(this.teamComboBox.getValue());
+//        this.crew.setGender(this.genderComboBox.getValue());
     }
 
     private Boolean isTeamAndGenderSelected() {

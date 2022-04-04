@@ -57,11 +57,7 @@ public class CrewMember extends Person {
 
     @Override
     public String toString() {
-//        if (this.isCox) {
-//            return team.getTeamName() + " | " + super.toString() + " | Cox";
-//        } else {
             return team.getTeamName() + " | " + super.toString();
-//        }
     }
 
 }
