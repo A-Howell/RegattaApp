@@ -1,8 +1,5 @@
-import classes.Crew;
-import classes.CrewMember;
-import classes.Regatta;
+import classes.*;
 import enums.BoatType;
-import classes.Team;
 import enums.Gender;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -51,6 +48,7 @@ public class CreationPageCrewController implements Initializable {
     private ComboBox<Gender> genderComboBox;
 
 //    private Crew crew;
+    private List<CrewMember> allCrewMembersList;
     private ArrayList<CrewMember> selectedCrewMembers;
     private CrewMember selectedCox;
 
@@ -67,9 +65,12 @@ public class CreationPageCrewController implements Initializable {
 
 //        this.crewMemberListView.setItems(FXCollections.observableList(r.getCrewMembers()));
 
+        this.allCrewMembersList = new ArrayList<>();
         for (Team team : r.getTeams()) {
-            this.crewMemberListView.getItems().addAll(team.getTeamMembers());
+            this.allCrewMembersList.addAll(team.getTeamMembers());
         }
+
+        this.crewMemberListView.getItems().addAll(this.allCrewMembersList);
 
         this.teamComboBox.setItems(FXCollections.observableList(r.getTeams()));
 
@@ -105,7 +106,7 @@ public class CreationPageCrewController implements Initializable {
                 tempCrew.setCox(this.selectedCox);
             }
             tempCrew.setGender(this.genderComboBox.getValue());
-            tempCrew.setTeam(this.teamComboBox.getValue());
+            tempCrew.setTeamID(this.teamComboBox.getValue().getTeamID());
 //            tempCrew.setCrewMembers(this.selectedCrewMembers);
 
             r.getTeams()
@@ -115,7 +116,7 @@ public class CreationPageCrewController implements Initializable {
             for (CrewMember cm : selectedCrewMembers) {
                 int teamIndex = r.getTeams().indexOf(this.teamComboBox.getValue());
                 int crewIndex = r.getTeams().get(teamIndex).getTeamCrews().indexOf(tempCrew);
-                r.getTeams().get(teamIndex).getTeamCrews().get(crewIndex).addCrewMember(cm);
+                r.getTeams().get(teamIndex).getTeamCrews().get(crewIndex).addCrewMember(cm.getCrewMemberID());
             }
 
             stage.setUserData(r);
@@ -131,7 +132,8 @@ public class CreationPageCrewController implements Initializable {
         this.parentController.getCreateCrewButton().setDisable(true);
         infoForButtonCheck();
 
-        for (Team team : r.getTeams()) {
+        // TODO remove
+        /*for (Team team : r.getTeams()) {
             System.out.println("Team: " + team);
             for (CrewMember tm : team.getTeamMembers()) {
                 System.out.println("    TM: " + tm);
@@ -139,11 +141,11 @@ public class CreationPageCrewController implements Initializable {
             System.out.println("Team: " + team);
             for (Crew crew : team.getTeamCrews()) {
                 System.out.println("    Crew: " + crew);
-                for (CrewMember tm : crew.getCrewMembers()  ) {
+                for (CrewMember tm : crew.getCrewMembersID()  ) {
                     System.out.println("        CrewMember: " + tm);
                 }
             }
-        }
+        }*/
     }
 
     @FXML
@@ -202,8 +204,10 @@ public class CreationPageCrewController implements Initializable {
 
             List<CrewMember> crewMembers = new ArrayList<>();
 
-            for (CrewMember crewMember : r.getCrewMembers()) {
-                if (crewMember.getTeam() == this.teamComboBox.getValue()
+
+
+            for (CrewMember crewMember : r.getAllCrewMembers()) {
+                if (crewMember.getTeamID().equals(this.teamComboBox.getValue().getTeamID())
                     && crewMember.getGender() == this.genderComboBox.getValue()) {
                     crewMembers.add(crewMember);
                 }

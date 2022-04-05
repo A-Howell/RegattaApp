@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Official extends Person {
     private ArrayList<Race> racesOfficiating;
-    private int officialID;
+    private String officialID;
 
     private static int officialCount = 0;
 
@@ -16,7 +16,7 @@ public class Official extends Person {
         this.racesOfficiating = new ArrayList<Race>();
 
         officialCount++;
-        this.officialID = officialCount;
+        this.officialID = "O" + officialCount;
     }
 
     // Setters
@@ -25,10 +25,26 @@ public class Official extends Person {
         this.racesOfficiating = racesOfficiating;
     }
 
+    public void setOfficialID(String officialID) {
+        this.officialID = officialID;
+    }
+
+    public static void setOfficialCount(int officialCount) {
+        Official.officialCount = officialCount;
+    }
+
     // Getters
 
     public ArrayList<Race> getRacesOfficiating() {
         return racesOfficiating;
+    }
+
+    public String getOfficialID() {
+        return officialID;
+    }
+
+    public static int getOfficialCount() {
+        return officialCount;
     }
 
     // Other

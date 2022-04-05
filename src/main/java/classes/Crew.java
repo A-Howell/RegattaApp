@@ -6,31 +6,31 @@ import enums.Gender;
 import java.util.ArrayList;
 
 public class Crew {
-    private ArrayList<CrewMember> crewMembers;
+
+    private String crewID;
+    private String teamID;
     private BoatType boatType;
-    private Team team;
-    private CrewMember cox;
     private Gender gender;
-    private int crewID;
+    private CrewMember cox;
+    private ArrayList<String> crewMembersID;
 
     private static int crewCounter = 0;
 
-
     public Crew(BoatType boatType) {
         this.boatType = boatType;
-        this.crewMembers = new ArrayList<>();
+        this.crewMembersID = new ArrayList<>();
         this.cox = null;
-        this.team = null;
+        this.teamID = "";
         this.gender = Gender.OTHER;
 
         crewCounter++;
-        this.crewID = crewCounter;
+        this.crewID = "C" + crewCounter;
     }
 
     // Setters
 
-    public void setCrewMembers(ArrayList<CrewMember> crewMembers) {
-        this.crewMembers = crewMembers;
+    public void setCrewMembersID(ArrayList<String> crewMembersID) {
+        this.crewMembersID = crewMembersID;
     }
 
     public void setBoatType(BoatType boatType) {
@@ -41,15 +41,15 @@ public class Crew {
         this.cox = cox;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeamID(String teamID) {
+        this.teamID = teamID;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public void setCrewID(int crewID) {
+    public void setCrewID(String crewID) {
         this.crewID = crewID;
     }
 
@@ -59,8 +59,8 @@ public class Crew {
 
     // Getters
 
-    public ArrayList<CrewMember> getCrewMembers() {
-        return crewMembers;
+    public ArrayList<String> getCrewMembersID() {
+        return crewMembersID;
     }
 
     public BoatType getBoatType() {
@@ -71,15 +71,15 @@ public class Crew {
         return cox;
     }
 
-    public Team getTeam() {
-        return team;
+    public String getTeamID() {
+        return teamID;
     }
 
     public Gender getGender() {
         return gender;
     }
 
-    public int getCrewID() {
+    public String getCrewID() {
         return crewID;
     }
 
@@ -89,13 +89,13 @@ public class Crew {
 
     // Other
 
-    public void addCrewMember(CrewMember crewMember) {
-        this.crewMembers.add(crewMember);
+    public void addCrewMember(String crewMemberID) {
+        this.crewMembersID.add(crewMemberID);
     }
 
-    public void removeCrewMember(CrewMember crewMember) {
-        if (crewMembers.contains(crewMember)) {
-            this.crewMembers.remove(crewMember);
+    public void removeCrewMember(String crewMemberID) {
+        if (crewMembersID.contains(crewMemberID)) {
+            this.crewMembersID.remove(crewMemberID);
         } else {
             System.out.println("Rower don't exist bro");
         }
@@ -104,9 +104,9 @@ public class Crew {
 
     @Override
     public String toString() {
-        String str = this.team.toString() + " | [" + this.crewID + "] " + this.boatType.toString();
+        String str = "[" + this.teamID + "] | [" + this.crewID + "] " + this.boatType.toString();
         if (this.cox != null) {
-             str += " | Cox: " + this.cox.getfName() + " " + this.cox.getlName();
+             str += " | Cox: " + this.cox.toString();
         }
         return str;
     }

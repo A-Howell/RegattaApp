@@ -124,15 +124,16 @@ public class CreationPageRaceController implements Initializable {
         this.parentController.getCreateRaceButton().setDisable(true);
         infoForButtonCheck();
         this.selectedCrewListView.setItems(FXCollections.observableList(this.selectedCrews));
-        for (Race race : r.getRaces()) {
+        // TODO test again soon
+        /*for (Race race : r.getRaces()) {
             System.out.println("Race: " + race);
             for (Crew crew : race.getCrewList()) {
                 System.out.println("    Crew: " + crew);
-                for (CrewMember cm : crew.getCrewMembers()) {
+                for (CrewMember cm : crew.getCrewMembersID()) {
                     System.out.println("        CrewMember: " + cm);
                 }
             }
-        }
+        }*/
     }
 
     @FXML

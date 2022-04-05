@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +50,7 @@ public class CreationPagePersonController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
         this.teamListView.setItems(FXCollections.observableList(r.getTeams()));
+        this.personListView.setItems(getPeopleList(r));
         this.parentController.getCreatePersonButton().setDisable(true);
         allInfoEnteredCheck();
     }
@@ -74,9 +74,9 @@ public class CreationPagePersonController implements Initializable {
                     this.phoneNumBox.getText(),
                     this.birthdayPicker.getValue(),
                     this.selectedGender,
-                    this.teamListView.getSelectionModel().getSelectedItem()
+                    this.teamListView.getSelectionModel().getSelectedItem().getTeamID()
             );
-            r.addCrewMember(c);
+            r.addCrewMemberToTeam(c);
         }
         stage.setUserData(r);
         this.personListView.setItems(getPeopleList(r));
@@ -87,7 +87,7 @@ public class CreationPagePersonController implements Initializable {
 
     private ObservableList<Person> getPeopleList(Regatta r) {
         List<Person> peopleList = new ArrayList<>(r.getOfficials());
-        peopleList.addAll(r.getCrewMembers());
+        peopleList.addAll(r.getAllCrewMembers());
         return FXCollections.observableList(peopleList);
     }
 

@@ -1,5 +1,7 @@
 package classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +10,9 @@ public class Regatta {
     private String name;
     private LocalDate date;
     private String location;
-    private List<Race> races;
     private List<Official> officials;
-    private List<CrewMember> crewMembers;
     private List<Team> teams;
+    private List<Race> races;
 
     public Regatta(String name, LocalDate date, String location) {
         this.name = name;
@@ -19,7 +20,6 @@ public class Regatta {
         this.location = location;
         this.races = new ArrayList<Race>();
         this.officials = new ArrayList<Official>();
-        this.crewMembers = new ArrayList<CrewMember>();
         this.teams = new ArrayList<Team>();
     }
 
@@ -45,9 +45,6 @@ public class Regatta {
         this.officials = officials;
     }
 
-    public void setCrewMembers(List<CrewMember> crewMembers) {
-        this.crewMembers = crewMembers;
-    }
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
@@ -75,8 +72,13 @@ public class Regatta {
         return officials;
     }
 
-    public List<CrewMember> getCrewMembers() {
-        return crewMembers;
+    @JsonIgnore
+    public List<CrewMember> getAllCrewMembers() {
+        List<CrewMember> allCrewMembersList = new ArrayList<>();
+        for (Team t : this.getTeams()) {
+            allCrewMembersList.addAll(t.getTeamMembers());
+        }
+        return allCrewMembersList;
     }
 
     public List<Team> getTeams() {
@@ -88,6 +90,7 @@ public class Regatta {
         this.teams.add(team);
     }
 
+    @JsonIgnore
     public List<Team> getTeamsWithMembers() {
         List<Team> teamsWithMembers = new ArrayList<Team>();
         for (Team team : this.teams) {
@@ -99,9 +102,15 @@ public class Regatta {
         return teamsWithMembers;
     }
 
-    public void addCrewMember(CrewMember crewMember) {
-        this.crewMembers.add(crewMember);
-        crewMember.getTeam().addTeamMember(crewMember);
+    public void addCrewMemberToTeam(CrewMember crewMember) {
+//        this.crewMembers.add(crewMember);
+//        crewMember.getTeam().addTeamMember(crewMember);
+        for (Team team : this.getTeams()) {
+            if (team.getTeamID().equals(crewMember.getTeamID())) {
+                team.addTeamMember(crewMember);
+                break;
+            }
+        }
     }
 
     public void addOfficial(Official official) {
@@ -110,6 +119,12 @@ public class Regatta {
 
     public void addRace(Race race) {
         this.races.add(race);
+    }
+
+    @Override
+    public String toString() {
+        return this.teams + "\n"
+                + this.races + "\n";
     }
 
 }

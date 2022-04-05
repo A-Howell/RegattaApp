@@ -14,6 +14,7 @@
             <Button fx:id="createPersonButton" text="Create Person" onAction="#createPersonButtonAction" />
             <Button fx:id="createCrewButton" text="Create Crew" onAction="#createCrewButtonAction"/>
             <Button fx:id="createRaceButton" text="Create Race" onAction="#createRaceButtonAction"/>
+            <Button fx:id="finishRegattaButton" text="Finish regatta" onAction="#finishRegattaButtonAction"/>
         </HBox>
     </top>
     <center>

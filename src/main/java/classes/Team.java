@@ -3,16 +3,18 @@ package classes;
 import java.util.ArrayList;
 
 public class Team {
+    private String teamID;
     private String teamName;
-    private ArrayList<Crew> teamCrews;
     private ArrayList<CrewMember> teamMembers;
-    private int teamID;
+    private ArrayList<Crew> teamCrews;
+
+
 
     private static int teamCount = 0;
 
     public Team(String teamName) {
         teamCount++;
-        this.teamID = teamCount;
+        this.teamID = "T" + teamCount;
 
         this.teamName = teamName;
         this.teamCrews = new ArrayList<Crew>();
@@ -33,7 +35,7 @@ public class Team {
         this.teamMembers = teamMembers;
     }
 
-    public void setTeamID(int teamID) {
+    public void setTeamID(String teamID) {
         this.teamID = teamID;
     }
 
@@ -55,7 +57,7 @@ public class Team {
         return teamMembers;
     }
 
-    public int getTeamID() {
+    public String getTeamID() {
         return teamID;
     }
 

@@ -3,30 +3,30 @@ package classes;
 import enums.Gender;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class CrewMember extends Person {
-    private Team team;
-    private int crewMemberID;
+    private String crewMemberID;
+    private String teamID;
+
 
     private static int crewMemberCount = 0;
 
     public CrewMember(String fName, String lName, String phoneNum, LocalDate birthday,
-                      Gender gender, Team team) {
+                      Gender gender, String teamID) {
         super(fName, lName, phoneNum, birthday, gender);
-        this.team = team;
+        this.teamID = teamID;
 
         crewMemberCount++;
-        this.crewMemberID = crewMemberCount;
+        this.crewMemberID = "R" + crewMemberCount;
     }
 
     // Setters
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeamID(String teamID) {
+        this.teamID = teamID;
     }
 
-    public void setCrewMemberID(int crewMemberID) {
+    public void setCrewMemberID(String crewMemberID) {
         this.crewMemberID = crewMemberID;
     }
 
@@ -36,11 +36,11 @@ public class CrewMember extends Person {
 
     // Getters
 
-    public Team getTeam() {
-        return team;
+    public String getTeamID() {
+        return teamID;
     }
 
-    public int getCrewMemberID() {
+    public String getCrewMemberID() {
         return crewMemberID;
     }
 
@@ -52,7 +52,7 @@ public class CrewMember extends Person {
 
     @Override
     public String toString() {
-            return team.getTeamName() + " | [" + this.crewMemberID + "] " + super.toString();
+            return "[" + this.teamID + "] | [" + this.crewMemberID + "] " + super.toString();
     }
 
 }

@@ -1,5 +1,6 @@
 package classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import enums.BoatType;
 import enums.Division;
 import enums.Gender;
@@ -13,11 +14,10 @@ public class Race {
     private Gender gender;
     private Division division;
     private BoatType boatType;
-    private int raceID;
+    private String raceID;
 
     private static int raceCounter = 0;
 
-    private int numOfCrewsEntered;
     private List<Crew> crewList;
 
     public Race(LocalTime startTime, Gender gender, Division division, BoatType boatType) {
@@ -26,11 +26,10 @@ public class Race {
         this.division = division;
         this.boatType = boatType;
 
-        this.numOfCrewsEntered = 0;
         this.crewList = new ArrayList<>();
 
         raceCounter++;
-        this.raceID = raceCounter;
+        this.raceID = "R" + raceCounter;
     }
 
     // Setters
@@ -51,15 +50,11 @@ public class Race {
         this.gender = gender;
     }
 
-    public void setNumOfCrewsEntered(int numOfCrewsEntered) {
-        this.numOfCrewsEntered = numOfCrewsEntered;
-    }
-
     public void setCrewList(List<Crew> crewList) {
         this.crewList = crewList;
     }
 
-    public void setRaceID(int raceID) {
+    public void setRaceID(String raceID) {
         this.raceID = raceID;
     }
 
@@ -85,15 +80,11 @@ public class Race {
         return gender;
     }
 
-    public int getNumOfCrewsEntered() {
-        return numOfCrewsEntered;
-    }
-
     public List<Crew> getCrewList() {
         return crewList;
     }
 
-    public int getRaceID() {
+    public String getRaceID() {
         return raceID;
     }
 
@@ -111,6 +102,7 @@ public class Race {
             this.crewList.remove(crew);
     }
 
+    @JsonIgnore
     public String getStartTimeString() {
         // TODO useless, remove
         return this.startTime.toString().substring(0, this.startTime.toString().length());
