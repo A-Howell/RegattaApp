@@ -18,9 +18,9 @@ public class Regatta {
         this.name = name;
         this.date = date;
         this.location = location;
-        this.races = new ArrayList<Race>();
-        this.officials = new ArrayList<Official>();
-        this.teams = new ArrayList<Team>();
+        this.races = new ArrayList<>();
+        this.officials = new ArrayList<>();
+        this.teams = new ArrayList<>();
     }
 
     // Setters

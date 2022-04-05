@@ -73,19 +73,19 @@ public class CreationPageController implements Initializable {
     }
 
     @FXML
-    private void finishRegattaButtonAction(ActionEvent event) throws JsonProcessingException {
+    private void finishRegattaButtonAction(ActionEvent event)/* throws JsonProcessingException */{
         checkEnabledButtons(event);
         finishRegattaButton.setDisable(true);
-//        loadFXMLCPRace(getClass().getResource(SceneConstants.CREATION_PAGE_RACE_XML));
+        loadFXMLFPRegatta(getClass().getResource(SceneConstants.FINISH_PAGE_REGATTA_XML));
 
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        Regatta r = (Regatta) stage.getUserData();
+//        Node node = (Node) event.getSource();
+//        Stage stage = (Stage) node.getScene().getWindow();
+//        Regatta r = (Regatta) stage.getUserData();
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.findAndRegisterModules();
-        String jsonStr = mapper.writeValueAsString(r);
-        System.out.println(jsonStr);
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.findAndRegisterModules();
+//        String jsonStr = mapper.writeValueAsString(r);
+//        System.out.println(jsonStr);
     }
 
     @Override
@@ -108,6 +108,7 @@ public class CreationPageController implements Initializable {
         createPersonButton.setDisable(false);
         createCrewButton.setDisable(false);
         createRaceButton.setDisable(false);
+        finishRegattaButton.setDisable(false);
     }
 
     private void loadFXMLCPRegatta(URL url) {
@@ -165,6 +166,18 @@ public class CreationPageController implements Initializable {
             l.setController(ctrl);
             this.borderPane.setCenter(l.load());
             System.out.println("Loaded race fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFXMLFPRegatta(URL url) {
+        try {
+            FXMLLoader l = new FXMLLoader(url);
+            FinishPageRegattaController ctrl = new FinishPageRegattaController(this);
+            l.setController(ctrl);
+            this.borderPane.setCenter(l.load());
+            System.out.println("Loaded finish regatta fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
