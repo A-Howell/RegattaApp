@@ -17,7 +17,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.CompressionLevel;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -59,14 +64,25 @@ public class FinishPageRegattaController implements Initializable {
         String jsonStr = mapper.writeValueAsString(r);
 
         try {
-            FileWriter myWriter = new FileWriter(r.getName().replace(" ", "")
+
+            String fileName = r.getName().replace(" ", "").toLowerCase()
                     + r.getDate().getDayOfMonth()
-                    + r.getDate().getMonth().toString().toLowerCase()
-                    + r.getDate().getYear() + ".json");
-            
+                    + r.getDate().getMonth().getValue()
+                    + r.getDate().getYear();
+            FileWriter myWriter = new FileWriter(fileName + ".json");
             myWriter.write(jsonStr);
             myWriter.close();
-            System.out.println("Wrote the file");
+
+            ZipParameters zipParameters = new ZipParameters();
+            zipParameters.setEncryptFiles(true);
+            zipParameters.setCompressionLevel(CompressionLevel.MAXIMUM);
+            zipParameters.setEncryptionMethod(EncryptionMethod.AES);
+
+            // TODO custom password entry field                      V Here V
+            ZipFile zipFile = new ZipFile(fileName + ".zip", "password".toCharArray());
+            zipFile.addFile(new File(fileName + ".json"), zipParameters);
+            zipFile.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

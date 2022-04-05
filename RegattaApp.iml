@@ -16,5 +16,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.2" level="project" />
+    <orderEntry type="library" name="Maven: net.lingala.zip4j:zip4j:2.9.0" level="project" />
   </component>
 </module>
