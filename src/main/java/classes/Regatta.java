@@ -10,8 +10,15 @@ public class Regatta {
     private String name;
     private LocalDate date;
     private String location;
+
+    private int officialCount = 0;
     private List<Official> officials;
+    private int teamCount = 0;
+    private int crewMemberCount = 0;
+    private int crewCount = 0;
     private List<Team> teams;
+    private int raceCount = 0;
+
     private List<Race> races;
     @JsonIgnore
     private boolean saved;
@@ -50,13 +57,32 @@ public class Regatta {
         this.officials = officials;
     }
 
-
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
 
     public void setSaved(boolean saved) {
         this.saved = saved;
+    }
+
+    public void setOfficialCount(int officialCount) {
+        this.officialCount = officialCount;
+    }
+
+    public void setCrewMemberCount(int crewMemberCount) {
+        this.crewMemberCount = crewMemberCount;
+    }
+
+    public void setTeamCount(int teamCount) {
+        this.teamCount = teamCount;
+    }
+
+    public void setCrewCount(int crewCount) {
+        this.crewCount = crewCount;
+    }
+
+    public void setRaceCount(int raceCount) {
+        this.raceCount = raceCount;
     }
 
     // Getters
@@ -94,6 +120,28 @@ public class Regatta {
         return teams;
     }
 
+    public int getOfficialCount() {
+        return officialCount;
+    }
+
+    public int getCrewMemberCount() {
+        return crewMemberCount;
+    }
+
+    public int getTeamCount() {
+        return teamCount;
+    }
+
+    public int getCrewCount() {
+        return crewCount;
+    }
+
+    public int getRaceCount() {
+        return raceCount;
+    }
+
+    // Bool check
+
     public boolean isSaved() {
         return saved;
     }
@@ -111,13 +159,10 @@ public class Regatta {
                 teamsWithMembers.add(team);
             }
         }
-
         return teamsWithMembers;
     }
 
     public void addCrewMemberToTeam(CrewMember crewMember) {
-//        this.crewMembers.add(crewMember);
-//        crewMember.getTeam().addTeamMember(crewMember);
         for (Team team : this.getTeams()) {
             if (team.getTeamID().equals(crewMember.getTeamID())) {
                 team.addTeamMember(crewMember);
@@ -132,6 +177,24 @@ public class Regatta {
 
     public void addRace(Race race) {
         this.races.add(race);
+    }
+
+    public void saveCounters() {
+        this.officialCount = this.officials.size();
+        this.teamCount = this.teams.size();
+        for (Team team : this.teams) {
+            this.crewMemberCount += team.getTeamMembers().size();
+            this.crewCount += team.getTeamCrews().size();
+        }
+        this.raceCount = this.races.size();
+    }
+
+    public void loadCounters() {
+        Official.setOfficialCount(this.officialCount);
+        Team.setTeamCount(this.teamCount);
+        CrewMember.setCrewMemberCount(this.crewMemberCount);
+        Crew.setCrewCounter(this.crewCount);
+        Race.setRaceCounter(this.raceCount);
     }
 
     @Override

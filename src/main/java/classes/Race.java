@@ -16,6 +16,7 @@ public class Race {
     private BoatType boatType;
     private String raceID;
 
+
     private static int raceCounter = 0;
 
     private List<Crew> crewList;

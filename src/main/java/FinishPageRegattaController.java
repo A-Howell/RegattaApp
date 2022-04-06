@@ -23,7 +23,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,17 +65,21 @@ public class FinishPageRegattaController implements Initializable {
     private void enterButtonAction(ActionEvent event) throws JsonProcessingException {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
+        r.saveCounters();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         String jsonStr = mapper.writeValueAsString(r);
 
         try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("_HH_mm_ss");
+            LocalDateTime now = LocalDateTime.now();
 
             String fileName = r.getName().replace(" ", "").toLowerCase()
                     + r.getDate().getDayOfMonth()
                     + r.getDate().getMonth().getValue()
-                    + r.getDate().getYear();
+                    + r.getDate().getYear()
+                    + dtf.format(now);
             FileWriter myWriter = new FileWriter(fileName + ".json");
             myWriter.write(jsonStr);
             myWriter.close();
@@ -85,6 +91,7 @@ public class FinishPageRegattaController implements Initializable {
 
             ZipFile zipFile = new ZipFile(fileName + ".zip", this.passwordEntry.getText().toCharArray());
             File tempFile = new File(fileName + ".json");
+
             zipFile.addFile(tempFile, zipParameters);
             if (tempFile.delete()) {
                 System.out.println("File successfully deleted after zip encryption");
@@ -103,8 +110,6 @@ public class FinishPageRegattaController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
         this.parentController.checkEnabledButtons(event);
         this.parentController.getFinishRegattaButton().setDisable(true);

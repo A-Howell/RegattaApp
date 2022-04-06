@@ -70,24 +70,30 @@ public class FrontPageController implements Initializable {
         // Use zip4j to decrypt and open file, store to variable using jackson to convert to Regatta object
         try {
             ZipFile zipFile = new ZipFile(this.loadedZipFile, this.passwordEntry.getText().toCharArray());
+            zipFile.extractAll(System.getProperty("user.dir") + "/tmp");
 
-
-            zipFile.extractAll(System.getProperty("user.dir") + "/output");
-
-            File jsonFile = new File(System.getProperty("user.dir") + "/output/"
+            File jsonFile = new File(System.getProperty("user.dir") + "/tmp/"
                     + (this.loadedZipFile.getName().substring(0, this.loadedZipFile.getName().length() - 4)) + ".json");
 
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.findAndRegisterModules();
 
             Regatta r = objectMapper.readValue(jsonFile, Regatta.class);
+            r.loadCounters();
             Main.getStage().setUserData(r);
-
             System.out.println(r.toString());
+
+            if (jsonFile.delete()) {
+                System.out.println("Successfully deleted json file");
+            } else {
+                System.out.println("Error deleting json file");
+            }
+
             this.errorText.setText("");
             this.passwordEntry.setDisable(true);
             this.unlockFileButton.setDisable(true);
             this.continueButton.setDisable(false);
+            zipFile.close();
 
         } catch (ZipException e) {
             switch (e.getType()) {
@@ -124,11 +130,4 @@ public class FrontPageController implements Initializable {
         this.continueButton.setDisable(true);
         this.continueButton.setDisable(true);
     }
-
-    /*private void enableLoading() {
-        this.passwordEntry.setDisable(false);
-        this.unlockFileButton.setDisable(false);
-        this.continueButton.setDisable(false);
-        this.continueButton.setDisable(false);
-    }*/
 }

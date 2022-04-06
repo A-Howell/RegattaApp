@@ -91,6 +91,7 @@ public class CreationPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         disableButtons();
+        checkEnabledButtonsLoadedRegatta();
     }
 
     @FXML
@@ -203,6 +204,31 @@ public class CreationPageController implements Initializable {
 
         this.finishRegattaButton.setDisable(r.getRaces().isEmpty());
     }
+
+    protected void checkEnabledButtonsLoadedRegatta() {
+        Stage stage = Main.getStage();
+        if (stage.getUserData() != null) {
+            Regatta r = (Regatta) stage.getUserData();
+
+            // If a team has been created, enable team creation and person creation
+            this.createTeamButton.setDisable(r.getTeams().isEmpty());
+            this.createPersonButton.setDisable(r.getTeams().isEmpty());
+
+            // If a team with a member exists, enable crew creation
+            this.createCrewButton.setDisable(r.getAllCrewMembers().isEmpty());
+
+            List<Crew> crews = new ArrayList<>();
+            for (Team team : r.getTeams()) {
+                crews.addAll(FXCollections.observableList(team.getTeamCrews()));
+            }
+            this.createRaceButton.setDisable(crews.isEmpty());
+
+            this.finishRegattaButton.setDisable(r.getRaces().isEmpty());
+        }
+
+    }
+
+
 
     // Setters
 
