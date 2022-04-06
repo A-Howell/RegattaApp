@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import net.lingala.zip4j.ZipFile;
@@ -37,6 +34,12 @@ public class FinishPageRegattaController implements Initializable {
     @FXML
     private Button enterButton;
 
+    @FXML
+    private PasswordField passwordEntry;
+
+    @FXML
+    private Label savedText;
+
     private final CreationPageController parentController;
 
     public FinishPageRegattaController(CreationPageController parentController) {
@@ -49,6 +52,8 @@ public class FinishPageRegattaController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
 
         this.parentController.getFinishRegattaButton().setDisable(true);
+
+
 
     }
 
@@ -78,14 +83,28 @@ public class FinishPageRegattaController implements Initializable {
             zipParameters.setCompressionLevel(CompressionLevel.MAXIMUM);
             zipParameters.setEncryptionMethod(EncryptionMethod.AES);
 
-            // TODO custom password entry field                      V Here V
-            ZipFile zipFile = new ZipFile(fileName + ".zip", "password".toCharArray());
-            zipFile.addFile(new File(fileName + ".json"), zipParameters);
+            ZipFile zipFile = new ZipFile(fileName + ".zip", this.passwordEntry.getText().toCharArray());
+            File tempFile = new File(fileName + ".json");
+            zipFile.addFile(tempFile, zipParameters);
+            if (tempFile.delete()) {
+                System.out.println("File successfully deleted after zip encryption");
+            } else {
+                System.out.println("File deletion failed");
+            }
             zipFile.close();
+            this.savedText.setText("Password secured zip file containing regatta information stored as "
+                + fileName + ".zip");
+
+            this.passwordEntry.setDisable(true);
+            this.enterButton.setDisable(true);
+            r.setSaved(true);
+            stage.setUserData(r);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
         this.parentController.checkEnabledButtons(event);
         this.parentController.getFinishRegattaButton().setDisable(true);

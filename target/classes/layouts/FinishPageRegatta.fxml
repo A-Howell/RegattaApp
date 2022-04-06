@@ -9,9 +9,6 @@
 
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 
-            <Label text="Select gender: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
-
-            <Label text="Select boat type: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
 
         </GridPane>
@@ -20,17 +17,18 @@
         <GridPane alignment="center" hgap="10" vgap="10">
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 
-            <Label text="Press enter button to " GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <Button fx:id="enterButton" text="Enter" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#enterButtonAction" />
+            <Label text="Enter password to protect regatta information with: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <PasswordField fx:id="passwordEntry" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Button fx:id="enterButton" text="Enter" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#enterButtonAction" />
+
+            <Label fx:id="savedText" text=" " GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
         </GridPane>
     </center>
     <right>
         <GridPane alignment="center" hgap="10" vgap="10">
             <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-            <Label text="List of races" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <ListView fx:id="raceListView" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         </GridPane>
     </right>
 </BorderPane>
-        <!--            fx:controller="CreationPageRegattaController"-->

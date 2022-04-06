@@ -101,7 +101,7 @@ public class CreationPageRaceController implements Initializable {
 //        this.race.setGender(this.genderComboBox.getValue());
 //        this.race.setBoatType(this.boatTypeComboBox.getValue());
 //        this.race.setDivision(this.divTypeComboBox.getValue());
-
+        // TODO validate hours and minutes
         Race tempRace = new Race(
                 LocalTime.of(Integer.parseInt(this.hourBox.getText()),
                         Integer.parseInt(this.minuteBox.getText()), 0),

@@ -13,6 +13,8 @@ public class Regatta {
     private List<Official> officials;
     private List<Team> teams;
     private List<Race> races;
+    @JsonIgnore
+    private boolean saved;
 
     public Regatta(String name, LocalDate date, String location) {
         this.name = name;
@@ -50,6 +52,10 @@ public class Regatta {
         this.teams = teams;
     }
 
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+
     // Getters
 
     public String getName() {
@@ -83,6 +89,10 @@ public class Regatta {
 
     public List<Team> getTeams() {
         return teams;
+    }
+
+    public boolean isSaved() {
+        return saved;
     }
 
     // Other
