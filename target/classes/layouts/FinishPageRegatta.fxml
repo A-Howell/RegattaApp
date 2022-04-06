@@ -22,7 +22,7 @@
 
             <Button fx:id="enterButton" text="Enter" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#enterButtonAction" />
 
-            <Label fx:id="savedText" text=" " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="savedText" text=" " GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
         </GridPane>
     </center>

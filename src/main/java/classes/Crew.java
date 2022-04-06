@@ -16,6 +16,10 @@ public class Crew {
 
     private static int crewCounter = 0;
 
+    public Crew() {
+
+    }
+
     public Crew(BoatType boatType) {
         this.boatType = boatType;
         this.crewMembersID = new ArrayList<>();

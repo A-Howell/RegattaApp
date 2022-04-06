@@ -1,26 +1,134 @@
-import javafx.event.ActionEvent;
+import classes.Regatta;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class FrontPageController {
-
-    @FXML private Button startButton;
-
-//    @FXML private void handleCalculateButtonAction(ActionEvent event) {
-//        int x = Integer.parseInt(value1Box.getText());
-//        int y = Integer.parseInt(value2Box.getText());
-//        int z = x + y;
-//        resultBox.setText(Integer.toString(z));
-//    }
+public class FrontPageController implements Initializable {
 
     @FXML
-    protected void startButtonAction() throws IOException {
-        Main m = new Main();
-        m.changeScene(SceneConstants.CREATION_PAGE_XML);
+    private Button newRegattaButton;
+    @FXML
+    private Button loadRegattaButton;
+    @FXML
+    private Button unlockFileButton;
+    @FXML
+    private Button continueButton;
+
+    @FXML
+    private PasswordField passwordEntry;
+
+    @FXML
+    private Label errorText;
+
+    private File loadedZipFile;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        disableLoading();
 
     }
+
+    @FXML
+    protected void newRegattaButtonAction() throws IOException {
+        Main m = new Main();
+        m.changeScene(SceneConstants.CREATION_PAGE_XML);
+    }
+
+    @FXML
+    protected void loadRegattaButtonAction() {
+        Stage s = Main.getStage();
+        // Open file picker
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter (.zip)
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("ZIP files (*.zip)", "*.zip");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle("Open regatta zip file...");
+        this.loadedZipFile = fileChooser.showOpenDialog(s);
+
+        if (this.loadedZipFile != null) {
+            this.loadRegattaButton.setDisable(true);
+            this.passwordEntry.setDisable(false);
+        }
+    }
+
+    @FXML
+    protected void unlockFileButtonAction() throws IOException {
+        // Use zip4j to decrypt and open file, store to variable using jackson to convert to Regatta object
+        try {
+            ZipFile zipFile = new ZipFile(this.loadedZipFile, this.passwordEntry.getText().toCharArray());
+
+
+            zipFile.extractAll(System.getProperty("user.dir") + "/output");
+
+            File jsonFile = new File(System.getProperty("user.dir") + "/output/"
+                    + (this.loadedZipFile.getName().substring(0, this.loadedZipFile.getName().length() - 4)) + ".json");
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.findAndRegisterModules();
+
+            Regatta r = objectMapper.readValue(jsonFile, Regatta.class);
+            Main.getStage().setUserData(r);
+
+            System.out.println(r.toString());
+            this.errorText.setText("");
+            this.passwordEntry.setDisable(true);
+            this.unlockFileButton.setDisable(true);
+            this.continueButton.setDisable(false);
+
+        } catch (ZipException e) {
+            switch (e.getType()) {
+                case WRONG_PASSWORD:
+                    this.errorText.setText("Wrong password");
+                    break;
+                case UNKNOWN:
+                    this.errorText.setText("Unknown error");
+                    break;
+                default:
+                    this.errorText.setText("Error");
+                    break;
+            }
+//            if (e.getType() == Zip)
+        }
+
+    }
+
+    @FXML
+    protected void continueButtonAction() throws IOException {
+        // Move to normal regatta editing screen
+        Main m = new Main();
+        m.changeScene(SceneConstants.CREATION_PAGE_XML);
+    }
+
+    @FXML
+    protected void passwordEntryFieldAction() {
+        this.unlockFileButton.setDisable(this.passwordEntry.getText().isEmpty());
+    }
+
+    private void disableLoading() {
+        this.passwordEntry.setDisable(true);
+        this.unlockFileButton.setDisable(true);
+        this.continueButton.setDisable(true);
+        this.continueButton.setDisable(true);
+    }
+
+    /*private void enableLoading() {
+        this.passwordEntry.setDisable(false);
+        this.unlockFileButton.setDisable(false);
+        this.continueButton.setDisable(false);
+        this.continueButton.setDisable(false);
+    }*/
 }

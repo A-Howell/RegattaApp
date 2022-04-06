@@ -11,6 +11,10 @@ public class Official extends Person {
 
     private static int officialCount = 0;
 
+    public Official() {
+
+    }
+
     public Official(String fName, String lName, String phoneNum, LocalDate birthday, Gender gender) {
         super(fName, lName, phoneNum, birthday, gender);
         this.racesOfficiating = new ArrayList<Race>();

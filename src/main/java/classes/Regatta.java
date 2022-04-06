@@ -16,6 +16,9 @@ public class Regatta {
     @JsonIgnore
     private boolean saved;
 
+    public Regatta() {
+    }
+
     public Regatta(String name, LocalDate date, String location) {
         this.name = name;
         this.date = date;

@@ -4,13 +4,51 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<!--
 <BorderPane fx:controller="FrontPageController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <top>
 
     </top>
     <center>
         <HBox alignment="center" spacing="30">
-            <Button fx:id="startButton" text="Start" onAction="#startButtonAction" />
+            <Button fx:id="newRegattaButton" text="Start" onAction="#newRegattaButtonAction" />
+            <Button fx:id="loadRegattaButton" text="Start" onAction="#loadRegattaButtonAction" />
         </HBox>
     </center>
+</BorderPane>-->
+
+<BorderPane fx:controller="FrontPageController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+    <left>
+        <GridPane alignment="center" hgap="10" vgap="10">
+
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+
+
+
+        </GridPane>
+    </left>
+    <center>
+        <GridPane alignment="center" hgap="10" vgap="10">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+
+            <Button fx:id="newRegattaButton" text="Create a new regatta" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#newRegattaButtonAction" />
+            <Label text="or" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+            <Button fx:id="loadRegattaButton" text="Load regatta from file" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#loadRegattaButtonAction" />
+
+            <HBox alignment="center" spacing="30" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <PasswordField fx:id="passwordEntry" onKeyTyped="#passwordEntryFieldAction"/>
+                <Button fx:id="unlockFileButton" text="Unlock regatta from file" onAction="#unlockFileButtonAction" />
+
+            </HBox>
+
+            <Button fx:id="continueButton" text="Continue" GridPane.columnIndex="0" GridPane.rowIndex="4" onAction="#continueButtonAction" />
+            <Label fx:id="errorText" text=" " GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        </GridPane>
+    </center>
+    <right>
+        <GridPane alignment="center" hgap="10" vgap="10">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+        </GridPane>
+    </right>
 </BorderPane>

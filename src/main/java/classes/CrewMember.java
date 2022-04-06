@@ -11,6 +11,10 @@ public class CrewMember extends Person {
 
     private static int crewMemberCount = 0;
 
+    public CrewMember() {
+
+    }
+
     public CrewMember(String fName, String lName, String phoneNum, LocalDate birthday,
                       Gender gender, String teamID) {
         super(fName, lName, phoneNum, birthday, gender);

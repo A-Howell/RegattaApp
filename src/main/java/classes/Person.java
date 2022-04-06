@@ -11,6 +11,10 @@ public class Person {
     private LocalDate birthday;
     private Gender gender;
 
+    public Person() {
+
+    }
+
     public Person(String fName, String lName, String phoneNum, LocalDate birthday, Gender gender) {
         this.fName = fName;
         this.lName = lName;

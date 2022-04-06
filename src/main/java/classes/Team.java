@@ -12,6 +12,10 @@ public class Team {
 
     private static int teamCount = 0;
 
+    public Team() {
+
+    }
+
     public Team(String teamName) {
         teamCount++;
         this.teamID = "T" + teamCount;

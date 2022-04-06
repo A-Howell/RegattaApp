@@ -20,6 +20,10 @@ public class Race {
 
     private List<Crew> crewList;
 
+    public Race() {
+
+    }
+
     public Race(LocalTime startTime, Gender gender, Division division, BoatType boatType) {
         this.startTime = startTime;
         this.gender = gender;
