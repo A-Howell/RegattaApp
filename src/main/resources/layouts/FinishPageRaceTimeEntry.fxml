@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane">
+    <left>
+        <GridPane alignment="center" hgap="10" vgap="10" fx:id="left">
+
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+
+            <ListView fx:id="raceListView" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="4" onMouseClicked="#raceListViewAction" />
+
+        </GridPane>
+    </left>
+    <center>
+        <GridPane alignment="center" hgap="10" vgap="10" fx:id="center">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+            <Button fx:id="startRaceButton" text="Start race" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#startRaceButtonAction" />
+
+        </GridPane>
+    </center>
+    <right>
+        <GridPane alignment="center" hgap="10" vgap="10" fx:id="right">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+        </GridPane>
+    </right>
+</BorderPane>

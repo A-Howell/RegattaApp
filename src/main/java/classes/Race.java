@@ -8,18 +8,22 @@ import enums.Gender;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Race {
+    private String raceID;
     private LocalTime startTime;
-    private Gender gender;
+    private boolean isFinished;
     private Division division;
     private BoatType boatType;
-    private String raceID;
+    private Gender gender;
+    private LocalTime actualRaceStartTime;
+    private TreeMap<String, LocalTime> crewFinishTimes;
 
 
     private static int raceCounter = 0;
 
-    private List<Crew> crewList;
+    private List<Crew> crewList; // TODO should this be <Crew> or <String> with crew ID
 
     public Race() {
 
@@ -30,6 +34,11 @@ public class Race {
         this.gender = gender;
         this.division = division;
         this.boatType = boatType;
+
+        this.isFinished = false;
+
+        this.actualRaceStartTime = null;
+        this.crewFinishTimes = new TreeMap<>();
 
         this.crewList = new ArrayList<>();
 
@@ -67,6 +76,18 @@ public class Race {
         Race.raceCounter = raceCounter;
     }
 
+    public void setActualRaceStartTime(LocalTime actualRaceStartTime) {
+        this.actualRaceStartTime = actualRaceStartTime;
+    }
+
+    public void setCrewFinishTimes(TreeMap<String, LocalTime> crewFinishTimes) {
+        this.crewFinishTimes = crewFinishTimes;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
     // Getters
 
     public LocalTime getStartTime() {
@@ -97,6 +118,18 @@ public class Race {
         return raceCounter;
     }
 
+    public LocalTime getActualRaceStartTime() {
+        return actualRaceStartTime;
+    }
+
+    public TreeMap<String, LocalTime> getCrewFinishTimes() {
+        return crewFinishTimes;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
     // Others
 
     public void addCrew(Crew crew) {
@@ -105,6 +138,10 @@ public class Race {
 
     public void removeCrew(Crew crew) {
             this.crewList.remove(crew);
+    }
+
+    public void addFinishTime(String crewID, LocalTime finishTime) {
+        this.crewFinishTimes.put(crewID, finishTime);
     }
 
     @JsonIgnore

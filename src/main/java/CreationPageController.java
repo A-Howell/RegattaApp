@@ -36,6 +36,8 @@ public class CreationPageController implements Initializable {
     @FXML
     private Button createRaceButton;
     @FXML
+    private Button enterRaceTimeButton;
+    @FXML
     private Button finishRegattaButton;
 
     @FXML
@@ -73,19 +75,17 @@ public class CreationPageController implements Initializable {
     }
 
     @FXML
-    private void finishRegattaButtonAction(ActionEvent event)/* throws JsonProcessingException */{
+    private void enterRaceTimeButtonAction(ActionEvent event) {
+        checkEnabledButtons(event);
+        enterRaceTimeButton.setDisable(true);
+        loadFXMLFPRaceTimeEntry(getClass().getResource(SceneConstants.FINISH_PAGE_RACE_TIME_ENTRY_XML));
+    }
+
+    @FXML
+    private void finishRegattaButtonAction(ActionEvent event) {
         checkEnabledButtons(event);
         finishRegattaButton.setDisable(true);
         loadFXMLFPRegatta(getClass().getResource(SceneConstants.FINISH_PAGE_REGATTA_XML));
-
-//        Node node = (Node) event.getSource();
-//        Stage stage = (Stage) node.getScene().getWindow();
-//        Regatta r = (Regatta) stage.getUserData();
-
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.findAndRegisterModules();
-//        String jsonStr = mapper.writeValueAsString(r);
-//        System.out.println(jsonStr);
     }
 
     @Override
@@ -172,6 +172,18 @@ public class CreationPageController implements Initializable {
         }
     }
 
+    private void loadFXMLFPRaceTimeEntry(URL url) {
+        try {
+            FXMLLoader l = new FXMLLoader(url);
+            FinishPageRaceTimeEntryController ctrl = new FinishPageRaceTimeEntryController(this);
+            l.setController(ctrl);
+            this.borderPane.setCenter(l.load());
+            System.out.println("Loaded time entry fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadFXMLFPRegatta(URL url) {
         try {
             FXMLLoader l = new FXMLLoader(url);
@@ -224,11 +236,9 @@ public class CreationPageController implements Initializable {
             this.createRaceButton.setDisable(crews.isEmpty());
 
             this.finishRegattaButton.setDisable(r.getRaces().isEmpty());
+            this.enterRaceTimeButton.setDisable(r.getRaces().isEmpty());
         }
-
     }
-
-
 
     // Setters
 
@@ -260,6 +270,10 @@ public class CreationPageController implements Initializable {
         this.finishRegattaButton = finishRegattaButton;
     }
 
+    public void setEnterRaceTimeButton(Button enterRaceTimeButton) {
+        this.enterRaceTimeButton = enterRaceTimeButton;
+    }
+
     // Getters
 
     public BorderPane getBorderPane() {
@@ -288,5 +302,9 @@ public class CreationPageController implements Initializable {
 
     public Button getFinishRegattaButton() {
         return finishRegattaButton;
+    }
+
+    public Button getEnterRaceTimeButton() {
+        return enterRaceTimeButton;
     }
 }
