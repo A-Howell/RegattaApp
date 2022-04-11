@@ -22,6 +22,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class FinishPageRaceTimeEntryController implements Initializable {
@@ -45,23 +46,15 @@ public class FinishPageRaceTimeEntryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
-        Regatta r = (Regatta) stage.getUserData();
-
         this.startRaceButton.setDisable(true);
-        for (Race race : r.getRaces()) {
-            if (!race.isFinished()) {
-                this.raceListView.getItems().add(race);
-            }
-        }
-
+        updateRaceListView();
     }
 
     // Button actions
     // TODO need start race button
     @FXML
     private void startRaceButtonAction(ActionEvent event) {
-        for (Node button : ((GridPane) this.borderPane.getCenter()).getChildren()   ) {
+        for (Node button : ((GridPane) this.borderPane.getRight()).getChildren()   ) {
             button.setDisable(false);
         }
         this.startRaceButton.setDisable(true);
@@ -76,9 +69,15 @@ public class FinishPageRaceTimeEntryController implements Initializable {
 
     @FXML
     private void raceListViewAction(MouseEvent event) {
+        updateRaceListView();
         // get selection model at selected race
         // Generate finish buttons for each boat in race
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
+
+        if (!((GridPane) this.borderPane.getRight()).getChildren().isEmpty()) {
+            List<Node> buttonsToRemove = new ArrayList<>(((GridPane) this.borderPane.getRight()).getChildren());
+            ((GridPane) this.borderPane.getRight()).getChildren().removeAll(buttonsToRemove);
+        }
 
         if (!this.raceListView.getSelectionModel().isEmpty()) {
 
@@ -102,8 +101,6 @@ public class FinishPageRaceTimeEntryController implements Initializable {
 
                     r.getRaces().get(r.getRaces().indexOf(race)).addFinishTime(crew.getCrewID(), LocalTime.now());
 
-                    stage.setUserData(r);
-
                     this.raceListView.getSelectionModel().getSelectedItem()
                             .addFinishTime(crew.getCrewID(), LocalTime.now());
 
@@ -111,10 +108,38 @@ public class FinishPageRaceTimeEntryController implements Initializable {
                     finalTemp.setDisable(true);
                     if (isRaceFinished()) {
                         r.getRaces().get(r.getRaces().indexOf(race)).setFinished(true);
+
+                        int comparison = 0;
+                        int j = 0;
+                        LocalTime lowestTime = LocalTime.now();
+                        String lowestTimeCrew = "";
+                        for (Map.Entry<String,LocalTime> curr :
+                                r.getRaces().get(r.getRaces().indexOf(race)).getCrewFinishTimes().entrySet()) {
+                            if (j == 0) {
+                                lowestTime = curr.getValue();
+                                lowestTimeCrew = curr.getKey();
+                            } else {
+                                comparison = lowestTime.compareTo(curr.getValue());
+                                if (comparison > 0) {
+                                    System.out.println("Current is quicker");
+                                    lowestTime = curr.getValue();
+                                    lowestTimeCrew = curr.getKey();
+                                } else if (comparison == 0) {
+                                    System.out.println("They drew");
+                                } else {
+                                    System.out.println("Current is slower");
+                                }
+                            }
+                            j++;
+                        }
+                        r.getRaces().get(r.getRaces().indexOf(race)).setWinnerCrewID(lowestTimeCrew);
+                        System.out.println("Winners: " + lowestTimeCrew);
+                        updateRaceListView();
                     }
+                    stage.setUserData(r);
                 });
                 temp.setDisable(true);
-                ((GridPane) this.borderPane.getCenter()).add(temp, 0, i);
+                ((GridPane) this.borderPane.getRight()).add(temp, 0, i);
                 System.out.println("Added button");
                 i++;
             }
@@ -125,6 +150,19 @@ public class FinishPageRaceTimeEntryController implements Initializable {
     private boolean isRaceFinished() {
         return this.raceListView.getSelectionModel().getSelectedItem().getCrewList().size()
                 == this.raceListView.getSelectionModel().getSelectedItem().getCrewFinishTimes().size();
+    }
+
+    private void updateRaceListView() {
+        Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
+        Regatta r = (Regatta) stage.getUserData();
+
+        List<Race> raceList = new ArrayList<>();
+        for (Race race : r.getRaces()) {
+            if (!race.isFinished()) {
+                raceList.add(race);
+            }
+        }
+        this.raceListView.setItems(FXCollections.observableList(raceList));
     }
 
     // Setters

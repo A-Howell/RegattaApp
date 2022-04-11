@@ -17,16 +17,16 @@ public class Race {
     private Division division;
     private BoatType boatType;
     private Gender gender;
+    private List<String> crewList;
     private LocalTime actualRaceStartTime;
+    private String winnerCrewID;
     private TreeMap<String, LocalTime> crewFinishTimes;
 
 
     private static int raceCounter = 0;
 
-    private List<String> crewList; // TODO should this be <Crew> or <String> with crew ID
 
     public Race() {
-
     }
 
     public Race(LocalTime startTime, Gender gender, Division division, BoatType boatType) {
@@ -41,7 +41,7 @@ public class Race {
         this.crewFinishTimes = new TreeMap<>();
 
         this.crewList = new ArrayList<>();
-
+        this.winnerCrewID = "";
         raceCounter++;
         this.raceID = "R" + raceCounter;
     }
@@ -88,6 +88,10 @@ public class Race {
         isFinished = finished;
     }
 
+    public void setWinnerCrewID(String winnerCrewID) {
+        this.winnerCrewID = winnerCrewID;
+    }
+
     // Getters
 
     public LocalTime getStartTime() {
@@ -128,6 +132,10 @@ public class Race {
 
     public boolean isFinished() {
         return isFinished;
+    }
+
+    public String getWinnerCrewID() {
+        return winnerCrewID;
     }
 
     // Others
