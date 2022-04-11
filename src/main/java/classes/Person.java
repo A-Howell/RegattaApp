@@ -1,5 +1,6 @@
 package classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import enums.Gender;
 
 import java.time.LocalDate;
@@ -53,6 +54,16 @@ public class Person {
 
     public String getlName() {
         return lName;
+    }
+
+    @JsonIgnore
+    public String getFullName() {
+        return fName + " " + lName;
+    }
+
+    @JsonIgnore
+    public String getShortFullName() { // A.Howell
+        return fName.charAt(0) + "." + lName;
     }
 
     public String getPhoneNum() {

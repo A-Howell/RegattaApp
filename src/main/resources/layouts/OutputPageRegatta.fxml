@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane">
+    <left>
+        <GridPane alignment="center" hgap="10" vgap="10" fx:id="left">
+
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+
+        </GridPane>
+    </left>
+    <center>
+        <GridPane alignment="center" hgap="10" vgap="10" fx:id="center">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+
+            <TextField fx:id="raceDayInfoFileNameBox" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Button fx:id="raceDayInfoButton" text="Output race day info to PDF" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#raceDayInfoButtonAction" />
+
+            <TextField fx:id="finishTimesInfoFileNameBox" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Button fx:id="finishTimesInfoButton" text="Output race crews finish timings to PDF" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#finishTimesInfoButtonAction" />
+
+        </GridPane>
+    </center>
+    <right>
+        <GridPane alignment="center" hgap="10" vgap="10" fx:id="right">
+            <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+        </GridPane>
+    </right>
+</BorderPane>

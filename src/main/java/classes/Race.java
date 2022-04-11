@@ -23,7 +23,7 @@ public class Race {
 
     private static int raceCounter = 0;
 
-    private List<Crew> crewList; // TODO should this be <Crew> or <String> with crew ID
+    private List<String> crewList; // TODO should this be <Crew> or <String> with crew ID
 
     public Race() {
 
@@ -64,7 +64,7 @@ public class Race {
         this.gender = gender;
     }
 
-    public void setCrewList(List<Crew> crewList) {
+    public void setCrewList(List<String> crewList) {
         this.crewList = crewList;
     }
 
@@ -106,7 +106,7 @@ public class Race {
         return gender;
     }
 
-    public List<Crew> getCrewList() {
+    public List<String> getCrewList() {
         return crewList;
     }
 
@@ -133,7 +133,7 @@ public class Race {
     // Others
 
     public void addCrew(Crew crew) {
-        this.crewList.add(crew);
+        this.crewList.add(crew.getCrewID());
     }
 
     public void removeCrew(Crew crew) {
@@ -156,6 +156,13 @@ public class Race {
                 + getStartTimeString() + " | "
                 + this.division.toStringShortened() + " "
                 + this.gender.toStringShortened() + " " + this.boatType.toString() + " | "
+                + this.crewList.size() + " boats";
+    }
+
+    public String toStringForPDF() {
+        return getStartTimeString() + " | "
+                + this.division.toString() + " "
+                + this.gender.toString() + " " + this.boatType.toString() + " | "
                 + this.crewList.size() + " boats";
     }
 }

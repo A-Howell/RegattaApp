@@ -11,5 +11,6 @@ public final class SceneConstants {
     public static final String CREATION_PAGE_RACE_XML = "layouts/CreationPageRace.fxml";
     public static final String FINISH_PAGE_RACE_TIME_ENTRY_XML = "layouts/FinishPageRaceTimeEntry.fxml";
     public static final String FINISH_PAGE_REGATTA_XML = "layouts/FinishPageRegatta.fxml";
+    public static final String OUTPUT_PAGE_REGATTA_XML = "layouts/OutputPageRegatta.fxml";
 
 }

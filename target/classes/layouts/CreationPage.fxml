@@ -16,6 +16,7 @@
             <Button fx:id="createRaceButton" text="Create Race" onAction="#createRaceButtonAction"/>
             <Button fx:id="enterRaceTimeButton" text="Enter race times" onAction="#enterRaceTimeButtonAction"/>
             <Button fx:id="finishRegattaButton" text="Save regatta" onAction="#finishRegattaButtonAction"/>
+            <Button fx:id="outputRegattaButton" text="Output regatta to PDF" onAction="#outputRegattaButtonAction"/>
         </HBox>
     </top>
     <center>

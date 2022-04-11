@@ -69,9 +69,7 @@ public class FinishPageRaceTimeEntryController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
 
         Race race = this.raceListView.getSelectionModel().getSelectedItem();
-        for (Crew crew : race.getCrewList()) {
-            r.getRaces().get(r.getRaces().indexOf(race)).setActualRaceStartTime(LocalTime.now());
-        }
+        r.getRaces().get(r.getRaces().indexOf(race)).setActualRaceStartTime(LocalTime.now());
     }
 
     // ListView Actions
@@ -89,7 +87,14 @@ public class FinishPageRaceTimeEntryController implements Initializable {
             System.out.println(race.getCrewList());
             Button temp;
             int i = 1; // Start from row index 1 when adding buttons
-            for (Crew crew : race.getCrewList()) {
+
+            Regatta tempR = (Regatta) stage.getUserData();
+            List<Crew> crewsFromIDs = new ArrayList<>();
+            for (String crewID : race.getCrewList()) {
+                crewsFromIDs.add(tempR.getCrewByID(crewID));
+            }
+
+            for (Crew crew : crewsFromIDs) {
                 temp = new Button(crew.toString() + " finished");
                 Button finalTemp = temp;
                 temp.setOnAction(e -> {
@@ -101,6 +106,7 @@ public class FinishPageRaceTimeEntryController implements Initializable {
 
                     this.raceListView.getSelectionModel().getSelectedItem()
                             .addFinishTime(crew.getCrewID(), LocalTime.now());
+
                     System.out.println(LocalTime.now());
                     finalTemp.setDisable(true);
                     if (isRaceFinished()) {

@@ -39,6 +39,8 @@ public class CreationPageController implements Initializable {
     private Button enterRaceTimeButton;
     @FXML
     private Button finishRegattaButton;
+    @FXML
+    private Button outputRegattaButton;
 
     @FXML
     private void createRegattaButtonAction(ActionEvent event) {
@@ -86,6 +88,13 @@ public class CreationPageController implements Initializable {
         checkEnabledButtons(event);
         finishRegattaButton.setDisable(true);
         loadFXMLFPRegatta(getClass().getResource(SceneConstants.FINISH_PAGE_REGATTA_XML));
+    }
+
+    @FXML
+    private void outputRegattaButtonAction(ActionEvent event) {
+        checkEnabledButtons(event);
+        outputRegattaButton.setDisable(true);
+        loadFXMLOutputRegatta(getClass().getResource(SceneConstants.OUTPUT_PAGE_REGATTA_XML));
     }
 
     @Override
@@ -198,6 +207,18 @@ public class CreationPageController implements Initializable {
         }
     }
 
+    private void loadFXMLOutputRegatta(URL url) {
+        try {
+            FXMLLoader l = new FXMLLoader(url);
+            OutputPageRegattaController ctrl = new OutputPageRegattaController(this);
+            l.setController(ctrl);
+            this.borderPane.setCenter(l.load());
+            System.out.println("Loaded finish regatta fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void checkEnabledButtons(ActionEvent event) {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
@@ -221,6 +242,8 @@ public class CreationPageController implements Initializable {
 
         this.finishRegattaButton.setDisable(r.getRaces().isEmpty());
         this.enterRaceTimeButton.setDisable(r.getRaces().isEmpty());
+
+        this.outputRegattaButton.setDisable(r.getRaces().isEmpty());
     }
 
     protected void checkEnabledButtonsLoadedRegatta() {
@@ -246,6 +269,8 @@ public class CreationPageController implements Initializable {
 
             this.finishRegattaButton.setDisable(r.getRaces().isEmpty());
             this.enterRaceTimeButton.setDisable(r.getRaces().isEmpty());
+
+            this.outputRegattaButton.setDisable(r.getRaces().isEmpty());
         }
     }
 

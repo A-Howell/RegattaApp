@@ -140,6 +140,37 @@ public class Regatta {
         return raceCount;
     }
 
+    public Crew getCrewByID(String crewID) {
+        for (Team team : this.teams) {
+            for (Crew crew : team.getTeamCrews()) {
+                if (crew.getCrewID().equals(crewID)) {
+                    return crew;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Team getTeamByID(String teamID) {
+        for (Team team : this.teams) {
+            if (team.getTeamID().equals(teamID)) {
+                return team;
+            }
+        }
+        return null;
+    }
+
+    public CrewMember getCrewMemberByID(String crewMemberID) {
+        for (Team team : this.teams) {
+            for (CrewMember crewMember : team.getTeamMembers()) {
+                if (crewMember.getCrewMemberID().equals(crewMemberID)) {
+                    return crewMember;
+                }
+            }
+        }
+        return null;
+    }
+
     // Bool check
 
     public boolean isSaved() {

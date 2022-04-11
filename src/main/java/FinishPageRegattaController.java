@@ -54,9 +54,6 @@ public class FinishPageRegattaController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
 
         this.parentController.getFinishRegattaButton().setDisable(true);
-
-
-
     }
 
     // Button actions

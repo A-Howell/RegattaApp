@@ -110,8 +110,11 @@ public class CreationPageRaceController implements Initializable {
                 this.boatTypeComboBox.getValue());
 
 //        tempRace.setCrewList(this.race.getCrewList());
-        tempRace.setCrewList(this.selectedCrews);
-
+        List<String> crewIDsList = new ArrayList<>();
+        for (Crew crew : this.selectedCrews) {
+            crewIDsList.add(crew.getCrewID());
+        }
+        tempRace.setCrewList(crewIDsList);
 
         r.addRace(tempRace);
         stage.setUserData(r);
