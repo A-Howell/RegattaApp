@@ -48,7 +48,6 @@ public class FinishPageRaceTimeEntryController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
-        this.parentController.getFinishRegattaButton().setDisable(true);
         this.startRaceButton.setDisable(true);
         for (Race race : r.getRaces()) {
             if (!race.isFinished()) {

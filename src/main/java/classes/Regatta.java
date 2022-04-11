@@ -20,7 +20,6 @@ public class Regatta {
     private int raceCount = 0;
 
     private List<Race> races;
-    @JsonIgnore
     private boolean saved;
 
     public Regatta() {
@@ -33,6 +32,7 @@ public class Regatta {
         this.races = new ArrayList<>();
         this.officials = new ArrayList<>();
         this.teams = new ArrayList<>();
+        this.saved = false;
     }
 
     // Setters

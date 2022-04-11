@@ -66,6 +66,8 @@ public class FinishPageRegattaController implements Initializable {
         Stage stage = (Stage) this.parentController.getBorderPane().getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
         r.saveCounters();
+        r.setSaved(true);
+        stage.setUserData(r);
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
@@ -104,8 +106,7 @@ public class FinishPageRegattaController implements Initializable {
 
             this.passwordEntry.setDisable(true);
             this.enterButton.setDisable(true);
-            r.setSaved(true);
-            stage.setUserData(r);
+
 
         } catch (IOException e) {
             e.printStackTrace();

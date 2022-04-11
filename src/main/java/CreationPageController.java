@@ -100,6 +100,7 @@ public class CreationPageController implements Initializable {
         createPersonButton.setDisable(true);
         createCrewButton.setDisable(true);
         createRaceButton.setDisable(true);
+        enterRaceTimeButton.setDisable(true);
         finishRegattaButton.setDisable(true);
     }
 
@@ -109,6 +110,7 @@ public class CreationPageController implements Initializable {
         createPersonButton.setDisable(false);
         createCrewButton.setDisable(false);
         createRaceButton.setDisable(false);
+        enterRaceTimeButton.setDisable(false);
         finishRegattaButton.setDisable(false);
     }
 
@@ -201,6 +203,9 @@ public class CreationPageController implements Initializable {
         Stage stage = (Stage) node.getScene().getWindow();
         Regatta r = (Regatta) stage.getUserData();
 
+        // If regatta is loaded from file, disable option to edit regatta name and date
+        this.createRegattaButton.setDisable(r.isSaved());
+
         // If a team has been created, enable team creation and person creation
         this.createTeamButton.setDisable(r.getTeams().isEmpty());
         this.createPersonButton.setDisable(r.getTeams().isEmpty());
@@ -215,12 +220,16 @@ public class CreationPageController implements Initializable {
         this.createRaceButton.setDisable(crews.isEmpty());
 
         this.finishRegattaButton.setDisable(r.getRaces().isEmpty());
+        this.enterRaceTimeButton.setDisable(r.getRaces().isEmpty());
     }
 
     protected void checkEnabledButtonsLoadedRegatta() {
         Stage stage = Main.getStage();
         if (stage.getUserData() != null) {
             Regatta r = (Regatta) stage.getUserData();
+
+            // If regatta is loaded from file, disable option to edit regatta name and date
+            this.createRegattaButton.setDisable(r.isSaved());
 
             // If a team has been created, enable team creation and person creation
             this.createTeamButton.setDisable(r.getTeams().isEmpty());
