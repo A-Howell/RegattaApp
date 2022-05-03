@@ -179,7 +179,15 @@ public class Regatta {
 
     // Other
     public void addTeam(Team team) {
-        this.teams.add(team);
+        for (Team tmpTeam : this.teams) {
+            if (team.getTeamName().equals(tmpTeam.getTeamName())) {
+                return;
+            }
+        }
+
+        if(!this.teams.contains(team)) {
+            this.teams.add(team);
+        }
     }
 
     @JsonIgnore

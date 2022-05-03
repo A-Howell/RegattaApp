@@ -111,6 +111,7 @@ public class CreationPageController implements Initializable {
         createRaceButton.setDisable(true);
         enterRaceTimeButton.setDisable(true);
         finishRegattaButton.setDisable(true);
+        outputRegattaButton.setDisable(true);
     }
 
     @FXML
@@ -121,6 +122,7 @@ public class CreationPageController implements Initializable {
         createRaceButton.setDisable(false);
         enterRaceTimeButton.setDisable(false);
         finishRegattaButton.setDisable(false);
+        outputRegattaButton.setDisable(false);
     }
 
     private void loadFXMLCPRegatta(URL url) {
@@ -225,7 +227,7 @@ public class CreationPageController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
 
         // If regatta is loaded from file, disable option to edit regatta name and date
-        this.createRegattaButton.setDisable(r.isSaved());
+//        this.createRegattaButton.setDisable(r.isSaved());
 
         // If a team has been created, enable team creation and person creation
         this.createTeamButton.setDisable(r.getTeams().isEmpty());

@@ -58,7 +58,7 @@ public class OutputPageRegattaController implements Initializable {
         Regatta r = (Regatta) stage.getUserData();
 
         String fileName = r.getName().replace(" ", "").toLowerCase()
-                + r.getDate().getDayOfMonth()
+                + r.getDate().getDayOfMonth() // TODO add validation on regatta creation
                 + r.getDate().getMonth().getValue()
                 + r.getDate().getYear();
 

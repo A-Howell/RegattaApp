@@ -145,7 +145,7 @@ public class Race {
     }
 
     public void removeCrew(Crew crew) {
-            this.crewList.remove(crew);
+            this.crewList.remove(crew.getCrewID());
     }
 
     public void addFinishTime(String crewID, LocalTime finishTime) {

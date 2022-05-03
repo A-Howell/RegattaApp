@@ -54,7 +54,9 @@ public class Official extends Person {
     // Other
 
     public void addRace(Race race) {
-        this.racesOfficiating.add(race);
+        if (!this.racesOfficiating.contains(race)) {
+            this.racesOfficiating.add(race);
+        }
     }
 
     @Override

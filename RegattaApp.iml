@@ -18,5 +18,10 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.2" level="project" />
     <orderEntry type="library" name="Maven: net.lingala.zip4j:zip4j:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.5.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />
+    <orderEntry type="library" name="org.testfx:testfx-junit:4.0.15-alpha" level="project" />
   </component>
 </module>

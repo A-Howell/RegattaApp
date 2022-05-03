@@ -5,7 +5,7 @@ import enums.Gender;
 
 import java.time.LocalDate;
 
-public class Person {
+public abstract class Person {
     private String fName;
     private String lName;
     private String phoneNum;

@@ -131,21 +131,6 @@ public class CreationPageCrewController implements Initializable {
         this.parentController.checkEnabledButtons(event);
         this.parentController.getCreateCrewButton().setDisable(true);
         infoForButtonCheck();
-
-        // TODO remove
-        /*for (Team team : r.getTeams()) {
-            System.out.println("Team: " + team);
-            for (CrewMember tm : team.getTeamMembers()) {
-                System.out.println("    TM: " + tm);
-            }
-            System.out.println("Team: " + team);
-            for (Crew crew : team.getTeamCrews()) {
-                System.out.println("    Crew: " + crew);
-                for (CrewMember tm : crew.getCrewMembersID()  ) {
-                    System.out.println("        CrewMember: " + tm);
-                }
-            }
-        }*/
     }
 
     @FXML

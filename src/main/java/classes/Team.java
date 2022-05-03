@@ -8,8 +8,6 @@ public class Team {
     private ArrayList<CrewMember> teamMembers;
     private ArrayList<Crew> teamCrews;
 
-
-
     private static int teamCount = 0;
 
     public Team() {
